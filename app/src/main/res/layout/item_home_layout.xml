@@ -50,11 +50,11 @@
 
                     <ImageView
                         android:id="@+id/like_image"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:scaleType="fitCenter"
                         android:layout_gravity="center"
-                        android:src="@drawable/likebg" />
+                        android:src="@drawable/ic_like" />
 
                     <TextView
                         android:layout_width="wrap_content"

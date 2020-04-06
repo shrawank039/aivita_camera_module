@@ -46,30 +46,18 @@ public class Notification_F extends RootFragment implements View.OnClickListener
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_notification, container, false);
         context=getContext();
-
-
         datalist=new ArrayList<>();
-
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-
-
-
         adapter=new Notification_Adapter(context, datalist, new Notification_Adapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, Notification_Get_Set item) {
-
             }
         }
     );
-
         recyclerView.setAdapter(adapter);
-
-
-
         view.findViewById(R.id.no_data_layout).setVisibility(View.VISIBLE);
 
         view.findViewById(R.id.inbox_btn).setOnClickListener(this);

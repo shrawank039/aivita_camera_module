@@ -624,7 +624,7 @@ public class Followings extends RootFragment implements Player.EventListener, Fr
                     R.drawable.likebg));
         else
             iv.setImageDrawable(getResources().getDrawable(
-                    R.drawable.likebg));
+                    R.drawable.ic_like));
 
         mainlayout.addView(iv);
         Animation fadeoutani = AnimationUtils.loadAnimation(context,R.anim.fade_out);

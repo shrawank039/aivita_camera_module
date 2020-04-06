@@ -110,7 +110,7 @@ public class FollowingsAdapter extends RecyclerView.Adapter<FollowingsAdapter.Cu
                 holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.likebg));
             }
             else {
-                holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.likebg));
+                holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_like));
             }
 
 

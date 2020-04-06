@@ -151,8 +151,8 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
         popular.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   open_popularvideos();
-               }
+                Open_Following();
+                  }
            });
 
 
@@ -200,14 +200,6 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
         return view;
     }
 
-    private void open_popularvideos() {
-                Fragment fragment = new Followings();
-                FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.framelayout_homef, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
 
 
 
@@ -634,7 +626,7 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
                     R.drawable.likebg));
         else
             iv.setImageDrawable(getResources().getDrawable(
-                    R.drawable.likebg));
+                    R.drawable.ic_like));
 
         mainlayout.addView(iv);
         Animation fadeoutani = AnimationUtils.loadAnimation(context,R.anim.fade_out);
