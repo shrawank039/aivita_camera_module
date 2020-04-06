@@ -61,14 +61,16 @@
         android:src="@drawable/ic_lens_black_24dp"
         />
     <TextView
-        android:layout_toRightOf="@+id/tv_related"
+        android:padding="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/iv_point"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Popular"
+        android:id="@+id/popular"
+        android:layout_centerVertical="true"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/standard_white"
-        />
+        android:textColor="@color/dark_gray"/>
   </LinearLayout>
 
 </FrameLayout>

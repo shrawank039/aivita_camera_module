@@ -13,7 +13,6 @@ import android.os.Environment;
 import androidx.annotation.Nullable;
 
 import org.itniorwings.aivita.Following.Following_F;
-import org.itniorwings.aivita.Notifications.Notification_F;
 import org.itniorwings.aivita.Profile.Edit_Profile_F;
 import org.itniorwings.aivita.Profile.UserVideos.UserVideo_F;
 import org.itniorwings.aivita.R;
@@ -31,8 +30,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-import androidx.viewpager.widget.ViewPager;
-
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -93,7 +90,6 @@ import com.google.android.gms.ads.MobileAds;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import org.itniorwings.aivita.Videos.Followings;
-import org.itniorwings.aivita.Videos.Popular;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,7 +108,7 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
 
     View view;
     Context context;
-    TextView tv_following;
+    TextView tv_following,popular;
     RecyclerView recyclerView;
     ArrayList<Home_Get_Set> data_list;
     int currentPage=-1;
@@ -137,7 +133,7 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
 
         p_bar=view.findViewById(R.id.p_bar);
         tv_following=view.findViewById(R.id.tv_following);
-        TextView  tv_related= (TextView)view.findViewById(R.id.tv_related);
+        popular=view.findViewById(R.id.popular);
         recyclerView=view.findViewById(R.id.recylerview);
         layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
@@ -152,6 +148,12 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
                 Open_Following();
             }
         });
+        popular.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   open_popularvideos();
+               }
+           });
 
 
         // this is the scroll listener of recycler view which will tell the current item number
@@ -177,20 +179,6 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
             }
         });
 
-/*
-        tv_related.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = new Popular();
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.inboxlayout, fragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    }
-                });*/
-
-
 
 
         swiperefresh=view.findViewById(R.id.swiperefresh);
@@ -212,7 +200,14 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
         return view;
     }
 
-
+    private void open_popularvideos() {
+                Fragment fragment = new Followings();
+                FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.framelayout_homef, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
 
 
 
@@ -230,7 +225,7 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
         args.putString("from_where","following");
         following_f.setArguments(args);
         transaction.addToBackStack(null);
-        transaction.replace(R.id.MainMenuFragment, following_f);
+        transaction.replace(R.id.MainMenuFragment, following_f).commit();
     }
 
 /*
