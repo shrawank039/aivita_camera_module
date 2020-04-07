@@ -13,36 +13,32 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import timber.log.Timber;
+
 public class ApiRequest {
 
-    public static void Call_Api (final Context context, String url, JSONObject jsonObject,
-                                 final Callback callback){
-        Log.d(Variables.tag,url);
-        if(jsonObject!=null)
-        Log.d(Variables.tag,jsonObject.toString());
+    public static void Call_Api(final Context context, String url, JSONObject jsonObject, final Callback callback) {
 
-         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, jsonObject,
+        Timber.d(url);
+        if (jsonObject != null)
+            Timber.tag(Variables.tag).d(jsonObject.toString());
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-
-                        Log.d(Variables.tag,response.toString());
-
-                        if(callback!=null)
-                        callback .Responce(response.toString());
-
+                        Timber.tag(Variables.tag).d(response.toString());
+                        if (callback != null)
+                            callback.Responce(response.toString());
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(Variables.tag,error.toString());
-
-                if(callback!=null)
-                  callback .Responce(error.toString());
-
+                Timber.tag(Variables.tag).d(error.toString());
+                if (callback != null)
+                    callback.Responce(error.toString());
             }
         });
 

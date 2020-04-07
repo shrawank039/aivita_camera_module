@@ -5,7 +5,9 @@
     <string name="login">Login</string>
     <string name="facebook">Continue with Facebook</string>
     <string name="google">Continue with Google</string>
-
+    <string name="youtubelink">https://www.youtube.com/</string>
+    <string name="facebooklink">https://www.youtube.com/</string>
+    <string name="instagram">https://www.youtube.com/</string>
 
     <string name="facebook_app_id">525245454860340</string>
     <string name="fb_login_protocol_scheme">fb525245454860340</string>

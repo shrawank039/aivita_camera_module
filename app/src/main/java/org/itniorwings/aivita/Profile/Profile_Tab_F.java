@@ -1,6 +1,7 @@
 package org.itniorwings.aivita.Profile;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,9 +48,12 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -169,8 +173,6 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
         fans_count_txt=view.findViewById(R.id.fan_count_txt);
         heart_count_txt=view.findViewById(R.id.heart_count_txt);
 
-
-
         setting_btn=view.findViewById(R.id.setting_btn);
         setting_btn.setOnClickListener(this);
 
@@ -227,8 +229,6 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
 
         create_popup_layout=view.findViewById(R.id.create_popup_layout);
-
-
         view.findViewById(R.id.following_layout).setOnClickListener(this);
         view.findViewById(R.id.fans_layout).setOnClickListener(this);
 
@@ -243,8 +243,9 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
     }
 
 
+    @SuppressLint("SetTextI18n")
     public void update_profile(){
-        username.setText(Variables.sharedPreferences.getString(Variables.f_name, "") + " " + Variables.sharedPreferences.getString(Variables.l_name, ""));
+        username.setText("@aivita" +Variables.sharedPreferences.getString(Variables.f_name, "") + "" + Variables.sharedPreferences.getString(Variables.l_name, ""));
         pic_url = Variables.sharedPreferences.getString(Variables.u_pic, "null");
 
         try {
@@ -253,9 +254,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
                     .placeholder(R.drawable.profile_image_placeholder)
                     .centerCrop()
                     .into(imageView);
-
         } catch (Exception e) {
-
         }
     }
 
@@ -275,16 +274,13 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-
-
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 View v=tab.getCustomView();
+                assert v != null;
                 ImageView image=v.findViewById(R.id.image);
-
                 switch (tab.getPosition()){
                     case 0:
-
                         if(UserVideo_F.myvideo_count>0){
                             create_popup_layout.setVisibility(View.GONE);
                         }else {
@@ -292,10 +288,8 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
                             Animation aniRotate = AnimationUtils.loadAnimation(context,R.anim.up_and_down_animation);
                             create_popup_layout.startAnimation(aniRotate);
                         }
-
                         image.setImageDrawable(getResources().getDrawable(R.drawable.ic_view_carousel_black_24dp));
                         break;
-
                     case 1:
                         create_popup_layout.clearAnimation();
                         create_popup_layout.setVisibility(View.GONE);
@@ -304,10 +298,10 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
                 }
                 tab.setCustomView(v);
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 View v=tab.getCustomView();
+                assert v != null;
                 ImageView image=v.findViewById(R.id.image);
 
                 switch (tab.getPosition()){
@@ -335,20 +329,15 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
 
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final Resources resources;
-
         SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-
-
         public ViewPagerAdapter(final Resources resources, FragmentManager fm) {
             super(fm);
             this.resources = resources;
         }
-
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(int position){
             final Fragment result;
             switch (position) {
                 case 0:
@@ -362,7 +351,6 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
                     result = null;
                     break;
             }
-
             return result;
         }
 
@@ -380,6 +368,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
 
 
+        @NotNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment fragment = (Fragment) super.instantiateItem(container, position);
@@ -432,9 +421,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
     }
 
-    public void Parse_data(String responce){
-
-
+    public void Parse_data(String responce) {
         try {
             JSONObject jsonObject=new JSONObject(responce);
             String code=jsonObject.optString("code");
@@ -443,7 +430,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
                 JSONObject data=msgArray.getJSONObject(0);
                 JSONObject user_info=data.optJSONObject("user_info");
-                username.setText(user_info.optString("first_name")+" "+user_info.optString("last_name"));
+                username.setText("@aivita"+Objects.requireNonNull(user_info).optString("first_name")+user_info.optString("last_name"));
 
                 Profile_F.pic_url=user_info.optString("profile_pic");
                 Picasso.with(context)

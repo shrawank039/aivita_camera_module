@@ -89,7 +89,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
+import timber.log.Timber;
 
 
 /**
@@ -349,7 +351,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
 
                     JSONObject count=itemdata.optJSONObject("count");
-                    item.like_count=count.optString("like_count");
+                    item.like_count= Objects.requireNonNull(count).optString("like_count");
                     item.video_comment_count=count.optString("video_comment_count");
 
 
@@ -476,7 +478,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
     @Override
     public void onKeyboardHeightChanged(int height, int orientation) {
 
-        Log.d("resp",""+height);
+        Timber.d("" + height);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(write_layout.getWidth(), write_layout.getHeight());
         params.bottomMargin = height;
@@ -518,20 +520,17 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
         adapter.notifyDataSetChanged();
     }
 
-
-
     public void Set_Player(final int currentPage){
 
         final Home_Get_Set item= data_list.get(currentPage);
         DefaultTrackSelector trackSelector = new DefaultTrackSelector();
         final SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
-                Util.getUserAgent(context, "TikTok"));
-
+                Util.getUserAgent(context, "Aivita"));
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(item.video_url));
 
-        Log.d(Variables.tag,item.video_url);
+        Timber.d(item.video_url);
 
 
         player.prepare(videoSource);
@@ -1054,8 +1053,8 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
                     public void onScanCompleted(String path, Uri uri) {
 
-                        Log.i("ExternalStorage", "Scanned " + path + ":");
-                        Log.i("ExternalStorage", "-> uri=" + uri);
+                        Timber.i("Scanned " + path + ":");
+                        Timber.i("-> uri=%s", uri);
                     }
                 });
     }

@@ -267,9 +267,104 @@
                         android:id="@+id/user_bio_edit"
                         android:textColorHint="@color/gainsboro"
                         android:textColor="@color/dimgray"
-                        android:backgroundTint="@color/transparent"/>
+                        android:backgroundTint="@color/dark_gray"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="You tube link"
+                        android:textSize="16dp"
+                        android:padding="10dp"
+                        android:elevation="0.5dp"
+                        android:textStyle="italic"
+                        android:background="@color/app_color"
+                        android:textColor="@color/dimgray"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:hint="@string/youtubelink"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="15dp"
+                        android:textSize="15dp"
+                        android:imeOptions="flagNavigateNext"
+                        android:nextFocusForward="@+id/jobtitle_edit"
+                        android:id="@+id/et_youtubelink"
+                        android:textColorHint="@color/gainsboro"
+                        android:textColor="@color/standard_white"
+                        android:backgroundTint="@color/dark_gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Instagram link"
+                        android:textSize="16dp"
+                        android:padding="10dp"
+                        android:elevation="0.5dp"
+                        android:textStyle="italic"
+                        android:background="@color/app_color"
+                        android:textColor="@color/dimgray"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:hint="@string/instagram"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="15dp"
+                        android:textSize="15dp"
+                        android:imeOptions="flagNavigateNext"
+                        android:nextFocusForward="@+id/jobtitle_edit"
+                        android:id="@+id/et_instagramlink"
+                        android:textColorHint="@color/gainsboro"
+                        android:textColor="@color/standard_white"
+                        android:backgroundTint="@color/dark_gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="facebook link"
+                        android:textSize="16dp"
+                        android:padding="10dp"
+                        android:elevation="0.5dp"
+                        android:textStyle="italic"
+                        android:background="@color/app_color"
+                        android:textColor="@color/dimgray"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:hint="@string/facebooklink"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="15dp"
+                        android:textSize="15dp"
+                        android:imeOptions="flagNavigateNext"
+                        android:nextFocusForward="@+id/jobtitle_edit"
+                        android:id="@+id/et_facebooklink"
+                        android:textColorHint="@color/gainsboro"
+                        android:textColor="@color/standard_white"
+                        android:backgroundTint="@color/dark_gray"/>
+                </LinearLayout>
 
             </LinearLayout>
 

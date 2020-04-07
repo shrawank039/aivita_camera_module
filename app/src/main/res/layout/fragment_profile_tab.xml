@@ -25,10 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/d_bottom_gray_line">
-
-
-
-
                 <ImageButton
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -342,7 +338,7 @@
                         app:tabMode="fixed"
                         android:background="@color/lightblack"
                         app:tabBackground="@color/lightblack"
-                         app:tabTextColor="@color/lightblack"
+                         app:tabTextColor="@color/standard_white"
                         app:tabSelectedTextColor="@color/transparent"
                         android:gravity="center"
                         app:tabGravity="fill"
@@ -356,13 +352,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         />
-
                 </RelativeLayout>
-
             </RelativeLayout>
-
         </androidx.core.widget.NestedScrollView>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="70dp"
@@ -383,10 +375,5 @@
                 android:padding="10dp"
                 android:text="Tap + to create\n your first short video"/>
         </LinearLayout>
-
-
     </RelativeLayout>
-
-
-
 </FrameLayout>

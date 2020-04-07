@@ -1,38 +1,13 @@
 package org.itniorwings.aivita.Home;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-
-import androidx.annotation.Nullable;
-
-import org.itniorwings.aivita.Following.Following_F;
-import org.itniorwings.aivita.Profile.Edit_Profile_F;
-import org.itniorwings.aivita.Profile.UserVideos.UserVideo_F;
-import org.itniorwings.aivita.R;
-import org.itniorwings.aivita.SimpleClasses.ApiRequest;
-import org.itniorwings.aivita.SimpleClasses.Callback;
-
-import com.downloader.Error;
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -48,22 +23,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.daasuu.gpuv.composer.GPUMp4Composer;
 import com.daasuu.gpuv.egl.filter.GlWatermarkFilter;
-
-import org.itniorwings.aivita.Comments.Comment_F;
-import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
-import org.itniorwings.aivita.Main_Menu.MainMenuFragment;
-import org.itniorwings.aivita.Main_Menu.RelateToFragment_OnBack.RootFragment;
-import org.itniorwings.aivita.Profile.Profile_F;
-import org.itniorwings.aivita.SimpleClasses.API_CallBack;
-import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
-import org.itniorwings.aivita.SimpleClasses.Fragment_Data_Send;
-import org.itniorwings.aivita.SimpleClasses.Functions;
-import org.itniorwings.aivita.SimpleClasses.Variables;
-import org.itniorwings.aivita.Taged.Taged_Videos_F;
-import org.itniorwings.aivita.VideoAction.VideoAction_F;
-
+import com.downloader.Error;
 import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
 import com.downloader.OnPauseListener;
@@ -72,6 +43,7 @@ import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.Progress;
 import com.downloader.request.DownloadRequest;
+import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -87,16 +59,23 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.tabs.TabLayout;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
-import com.watermark.androidwm.Watermark;
-import com.watermark.androidwm.WatermarkBuilder;
-import com.watermark.androidwm.bean.WatermarkPosition;
-import com.watermark.androidwm.bean.WatermarkText;
 
+import org.itniorwings.aivita.Comments.Comment_F;
+import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
+import org.itniorwings.aivita.Main_Menu.MainMenuFragment;
+import org.itniorwings.aivita.Main_Menu.RelateToFragment_OnBack.RootFragment;
+import org.itniorwings.aivita.Profile.Profile_F;
+import org.itniorwings.aivita.R;
+import org.itniorwings.aivita.SimpleClasses.API_CallBack;
+import org.itniorwings.aivita.SimpleClasses.ApiRequest;
+import org.itniorwings.aivita.SimpleClasses.Callback;
+import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
+import org.itniorwings.aivita.SimpleClasses.Fragment_Data_Send;
+import org.itniorwings.aivita.SimpleClasses.Functions;
+import org.itniorwings.aivita.SimpleClasses.Variables;
+import org.itniorwings.aivita.Taged.Taged_Videos_F;
 import org.itniorwings.aivita.Videos.Followings;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,36 +88,26 @@ import java.util.Objects;
 import timber.log.Timber;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static com.facebook.FacebookSdk.getCallbackRequestCodeOffset;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 // this is the main view which is show all  the video in list
 public class Home_F extends RootFragment implements Player.EventListener, Fragment_Data_Send {
+    private View view;
+    private Context context;
+    private TextView tv_following, popular;
+    private RecyclerView recyclerView;
+    private ArrayList<Home_Get_Set> data_list;
+    private int currentPage = -1;
+    private LinearLayoutManager layoutManager;
 
-    View view;
-    Context context;
-    TextView tv_following, popular;
-    RecyclerView recyclerView;
-    ArrayList<Home_Get_Set> data_list;
-    int currentPage = -1;
-    LinearLayoutManager layoutManager;
-
-    ProgressBar p_bar;
-
+    private ProgressBar p_bar;
     SwipeRefreshLayout swiperefresh;
 
-    public Home_F() {
-        // Required empty public constructor
-    }
+    public Home_F() {}
 
     int swipe_count = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
 
@@ -271,7 +240,10 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
                         onPause();
                         OpenProfile(item, false);
                         break;
-
+                    case R.id.sound_image_layout:
+                        onPause();
+                        OpenProfile(item,false);
+                        break;
                     case R.id.username:
                         onPause();
                         OpenProfile(item, false);
@@ -330,6 +302,7 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         ApiRequest.Call_Api(context, Variables.showAllVideos, parameters, new Callback() {
             @Override
             public void Responce(String resp) {
@@ -888,11 +861,11 @@ public class Home_F extends RootFragment implements Player.EventListener, Fragme
     }
 
     public void Applywatermark(final Home_Get_Set item) {
-        String user_nameWm="@"+item.last_name;
+        String user_nameWm = "@" + item.last_name;
 
         Bitmap myLogo = ((BitmapDrawable) getResources().getDrawable(R.drawable.ic_watermark_image)).getBitmap();
         Bitmap bitmap_resize = Bitmap.createScaledBitmap(myLogo, 200, 200, false);
-         GlWatermarkFilter filter = new GlWatermarkFilter(bitmap_resize, GlWatermarkFilter.Position.LEFT_TOP);
+        GlWatermarkFilter filter = new GlWatermarkFilter(bitmap_resize, GlWatermarkFilter.Position.LEFT_TOP);
         new GPUMp4Composer(Environment.getExternalStorageDirectory() + "/aivita/" + item.video_id + "no_watermark" + ".mp4",
                 Environment.getExternalStorageDirectory() + "/aivita/" + item.video_id + ".mp4")
                 .filter(filter)

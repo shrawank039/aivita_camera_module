@@ -53,6 +53,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 import static android.app.Activity.RESULT_OK;
 
 public class Discover_SoundList_F extends RootFragment implements Player.EventListener{
@@ -167,7 +169,7 @@ public class Discover_SoundList_F extends RootFragment implements Player.EventLi
             e.printStackTrace();
         }
 
-        Log.d("resp",parameters.toString());
+        Timber.d(parameters.toString());
 
         ApiRequest.Call_Api(context, Variables.allSounds, parameters, new Callback() {
             @Override
@@ -196,7 +198,7 @@ public class Discover_SoundList_F extends RootFragment implements Player.EventLi
                 for(int i=msgArray.length()-1;i>=0;i--) {
                     JSONObject object=msgArray.getJSONObject(i);
 
-                    Log.d("resp",object.toString());
+                    Timber.d(object.toString());
 
                     JSONArray section_array=object.optJSONArray("sections_sounds");
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.itniorwings.aivita.R;
 import org.itniorwings.aivita.SimpleClasses.Variables;
+import org.jetbrains.annotations.NotNull;
 
 import com.squareup.picasso.Picasso;
 
@@ -101,7 +102,7 @@ public class Sounds_Adapter extends RecyclerView.Adapter<Sounds_Adapter.CustomVi
 
         public CustomViewHolder(View view) {
             super(view);
-            //  image=view.findViewById(R.id.image);
+//              image=view.findViewById(R.id.image);
             title=view.findViewById(R.id.title);
             recyclerView=view.findViewById(R.id.horizontal_recylerview);
 
@@ -134,6 +135,7 @@ class Sound_Items_Adapter extends RecyclerView.Adapter<Sound_Items_Adapter.Custo
         this.listener=listener;
     }
 
+    @NotNull
     @Override
     public Sound_Items_Adapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewtype) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_sound_layout,viewGroup,false);
@@ -147,8 +149,6 @@ class Sound_Items_Adapter extends RecyclerView.Adapter<Sound_Items_Adapter.Custo
     public int getItemCount() {
         return datalist.size();
     }
-
-
 
     @Override
     public void onBindViewHolder(final Sound_Items_Adapter.CustomViewHolder holder, final int i) {
