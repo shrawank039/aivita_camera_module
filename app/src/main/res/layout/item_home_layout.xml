@@ -205,22 +205,31 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+
                 android:layout_above="@+id/sound_image_layout"
-                android:layout_marginRight="@dimen/_12sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:scaleType="centerCrop"
-                    android:id="@+id/user_pic"
-                    android:src="@drawable/profile_image_placeholder"/>
 
-            </LinearLayout>
+                    android:id="@+id/user_pic"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:src="@drawable/ic_user"/>
+
+                <ImageView
+                    android:id="@+id/Home_follow_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_circle_black_24dp" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_marginTop="@dimen/_20sdp"

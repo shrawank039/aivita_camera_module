@@ -1,18 +1,28 @@
 package org.itniorwings.aivita.model;
 
 public class RegisterModel {
-    String email;
-    String password;
-    String username;
-    String phone;
-    String fileToUpload;
 
-    public RegisterModel(String email, String password, String username, String phone, String fileToUpload) {
-        this.email = email;
-        this.password = password;
+
+    private Object username;
+    private String email;
+    private String phone;
+    private String password;
+    private String fileToUpload;
+
+    public RegisterModel(Object username, String email, String phone, String password, String fileToUpload) {
         this.username = username;
+        this.email = email;
         this.phone = phone;
+        this.password = password;
         this.fileToUpload = fileToUpload;
+    }
+
+    public Object getUsername() {
+        return username;
+    }
+
+    public void setUsername(Object username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -23,22 +33,6 @@ public class RegisterModel {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -47,22 +41,19 @@ public class RegisterModel {
         this.phone = phone;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFileToUpload() {
         return fileToUpload;
     }
 
     public void setFileToUpload(String fileToUpload) {
         this.fileToUpload = fileToUpload;
-    }
-
-    @Override
-    public String toString() {
-        return "RegisterModel{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", phone='" + phone + '\'' +
-                ", fileToUpload='" + fileToUpload + '\'' +
-                '}';
     }
 }

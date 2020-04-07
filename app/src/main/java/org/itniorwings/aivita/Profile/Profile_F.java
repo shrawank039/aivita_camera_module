@@ -1,6 +1,4 @@
 package org.itniorwings.aivita.Profile;
-
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -45,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 // This is the profile screen which is show in 5 tab as well as it is also call
@@ -150,7 +149,7 @@ public class Profile_F extends RootFragment implements View.OnClickListener {
                 break;
 
             case R.id.back_btn:
-                getActivity().onBackPressed();
+                Objects.requireNonNull(getActivity()).onBackPressed();
                 break;
         }
     }
@@ -214,7 +213,6 @@ public class Profile_F extends RootFragment implements View.OnClickListener {
 
                     @Override
                     public void onGlobalLayout() {
-
                         RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) tabs_main_layout.getLayoutParams();
                         params.height= (int) (tabs_main_layout.getMeasuredHeight()+ height);
                         tabs_main_layout.setLayoutParams(params);
@@ -235,11 +233,7 @@ public class Profile_F extends RootFragment implements View.OnClickListener {
         view.findViewById(R.id.fans_layout).setOnClickListener(this);
 
         isdataload=true;
-
-
         Call_Api_For_get_Allvideos();
-
-
         return view;
     }
 

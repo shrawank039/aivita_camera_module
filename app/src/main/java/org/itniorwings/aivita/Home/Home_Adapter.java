@@ -64,6 +64,7 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
         final Home_Get_Set item= dataList.get(i);
         holder.setIsRecyclable(false);
 
+
         try {
 
         holder.bind(i,item,listener);
@@ -132,7 +133,7 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
         ImageView user_pic,sound_image;
 
         LinearLayout like_layout,comment_layout,shared_layout;
-        ImageView like_image,comment_image;
+        ImageView like_image,comment_image,Home_follow_btn;
         TextView like_txt,comment_txt;
 
 
@@ -140,51 +141,47 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
             super(view);
 
              playerview=view.findViewById(R.id.playerview);
-
             username=view.findViewById(R.id.username);
             user_pic=view.findViewById(R.id.user_pic);
             sound_name=view.findViewById(R.id.sound_name);
             sound_image=view.findViewById(R.id.sound_image);
-
+            Home_follow_btn=view.findViewById(R.id.Home_follow_btn);
             like_layout=view.findViewById(R.id.like_layout);
             like_image=view.findViewById(R.id.like_image);
             like_txt=view.findViewById(R.id.like_txt);
-
-
             desc_txt=view.findViewById(R.id.desc_txt);
-
             comment_layout=view.findViewById(R.id.comment_layout);
             comment_image=view.findViewById(R.id.comment_image);
             comment_txt=view.findViewById(R.id.comment_txt);
-
-
             shared_layout=view.findViewById(R.id.shared_layout);
         }
 
         public void bind(final int postion,final Home_Get_Set item, final Home_Adapter.OnItemClickListener listener) {
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(postion,item,v);
                 }
             });
-
-
             user_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     listener.onItemClick(postion,item,v);
                 }
             });
-
             username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     listener.onItemClick(postion,item,v);
                 }
+            });
+            Home_follow_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Home_follow_btn.setImageDrawable(context.getDrawable(R.drawable.ic_correct));
+
+                 }
             });
 
 

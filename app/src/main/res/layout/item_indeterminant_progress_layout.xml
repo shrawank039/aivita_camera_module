@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="Please Wait"
         android:textSize="20dp"
-        android:textColor="@color/black"
+        android:textColor="@color/transparent"
         android:layout_marginLeft="15dp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/pbar"/>

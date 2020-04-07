@@ -202,7 +202,6 @@ public class Video_Recoder_A extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-
     }
 
 
@@ -210,7 +209,7 @@ public class Video_Recoder_A extends AppCompatActivity implements View.OnClickLi
 
     // if the Recording is stop then it we start the recording
     // and if the mobile is recording the video then it will stop the recording
-    public void Start_or_Stop_Recording(){
+    public void Start_or_Stop_Recording() {
 
         if (!is_recording && sec_passed<18) {
             number=number+1;

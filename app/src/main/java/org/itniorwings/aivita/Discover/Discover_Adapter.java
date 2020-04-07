@@ -144,7 +144,7 @@ public class Discover_Adapter extends RecyclerView.Adapter<Discover_Adapter.Cust
         @Override
         public Horizontal_Adapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewtype) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_discover_horizontal_layout, viewGroup, false);
-            view.setLayoutParams(new RecyclerView.LayoutParams((Variables.screen_width/3)-20, RecyclerView.LayoutParams.WRAP_CONTENT));
+            view.setLayoutParams(new RecyclerView.LayoutParams((Variables.screen_width/2)-5, RecyclerView.LayoutParams.WRAP_CONTENT));
             Horizontal_Adapter.CustomViewHolder viewHolder = new Horizontal_Adapter.CustomViewHolder(view);
             return viewHolder;
         }
