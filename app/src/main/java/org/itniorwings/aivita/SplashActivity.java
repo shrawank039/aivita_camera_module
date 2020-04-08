@@ -12,7 +12,7 @@ import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
 
 import org.itniorwings.aivita.SimpleClasses.Variables;
 
-public class Splash_A extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
 
     CountDownTimer countDownTimer;
@@ -36,7 +36,7 @@ public class Splash_A extends AppCompatActivity {
 
             public void onFinish() {
 
-                Intent intent=new Intent(Splash_A.this, MainMenuActivity.class);
+                Intent intent=new Intent(SplashActivity.this, MainMenuActivity.class);
 
                 if(getIntent().getExtras()!=null) {
                     intent.putExtras(getIntent().getExtras());
