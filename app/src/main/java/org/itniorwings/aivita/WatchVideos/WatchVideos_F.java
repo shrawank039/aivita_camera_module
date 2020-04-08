@@ -44,12 +44,12 @@ import android.widget.Toast;
 import com.daasuu.gpuv.composer.GPUMp4Composer;
 import com.daasuu.gpuv.egl.filter.GlWatermarkFilter;
 import org.itniorwings.aivita.Comments.Comment_F;
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 import org.itniorwings.aivita.KeyBoard.KeyboardHeightObserver;
 import org.itniorwings.aivita.KeyBoard.KeyboardHeightProvider;
 import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
 import org.itniorwings.aivita.Main_Menu.MainMenuFragment;
-import org.itniorwings.aivita.Profile.Profile_F;
+import org.itniorwings.aivita.Profile.ProfileFragment;
 import org.itniorwings.aivita.SimpleClasses.API_CallBack;
 import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
 import org.itniorwings.aivita.SimpleClasses.Functions;
@@ -102,7 +102,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
     Context context;
 
     RecyclerView recyclerView;
-    ArrayList<Home_Get_Set> data_list;
+    ArrayList<HomeModel> data_list;
     int position=0;
     int currentPage=-1;
     LinearLayoutManager layoutManager;
@@ -148,7 +148,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
             Uri appLinkData = bundle.getData();
 
             if(appLinkData==null){
-                data_list = (ArrayList<Home_Get_Set>) bundle.getSerializableExtra("arraylist");
+                data_list = (ArrayList<HomeModel>) bundle.getSerializableExtra("arraylist");
                  position=bundle.getIntExtra("position",0);
                  Set_Adapter();
 
@@ -247,7 +247,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
                 for (int i=0;i<msgArray.length();i++) {
                     JSONObject itemdata = msgArray.optJSONObject(i);
 
-                    Home_Get_Set item=new Home_Get_Set();
+                    HomeModel item=new HomeModel();
                     item.fb_id=itemdata.optString("fb_id");
 
                     JSONObject user_info=itemdata.optJSONObject("user_info");
@@ -332,7 +332,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
                 JSONArray msgArray=jsonObject.getJSONArray("msg");
                 for (int i=0;i<msgArray.length();i++) {
                     JSONObject itemdata = msgArray.optJSONObject(i);
-                    Home_Get_Set item=new Home_Get_Set();
+                    HomeModel item=new HomeModel();
                     item.fb_id=itemdata.optString("fb_id");
 
                     JSONObject user_info=itemdata.optJSONObject("user_info");
@@ -392,7 +392,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
         adapter=new Watch_Videos_Adapter(context, data_list, new Watch_Videos_Adapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int postion,final Home_Get_Set item, View view) {
+            public void onItemClick(int postion, final HomeModel item, View view) {
 
                 switch(view.getId()){
 
@@ -512,7 +512,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
     @Override
     public void onDataSent(String yourData) {
         int comment_count =Integer.parseInt(yourData);
-        Home_Get_Set item=data_list.get(currentPage);
+        HomeModel item=data_list.get(currentPage);
         item.video_comment_count=""+comment_count;
         data_list.add(currentPage,item);
         adapter.notifyDataSetChanged();
@@ -522,7 +522,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
     public void Set_Player(final int currentPage){
 
-        final Home_Get_Set item= data_list.get(currentPage);
+        final HomeModel item= data_list.get(currentPage);
         DefaultTrackSelector trackSelector = new DefaultTrackSelector();
         final SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
@@ -659,7 +659,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
 
 
-    public void Show_heart_on_DoubleTap(Home_Get_Set item,final RelativeLayout mainlayout,MotionEvent e){
+    public void Show_heart_on_DoubleTap(HomeModel item, final RelativeLayout mainlayout, MotionEvent e){
 
         int x = (int) e.getX()-100;
         int y = (int) e.getY()-100;
@@ -702,7 +702,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
 
     // this function will call for like the video and Call an Api for like the video
-    public void Like_Video(final int position, final Home_Get_Set home_get_set){
+    public void Like_Video(final int position, final HomeModel home_get_set){
 
         String action=home_get_set.liked;
 
@@ -743,7 +743,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
 
     // this will open the comment screen
-    public void OpenComment(Home_Get_Set item) {
+    public void OpenComment(HomeModel item) {
         int comment_count=Integer.parseInt(item.video_comment_count);
         Fragment_Data_Send fragment_data_send=this;
 
@@ -762,7 +762,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
 
     // this will open the profile of user which have uploaded the currenlty running video
-    private void OpenProfile(Home_Get_Set item,boolean from_right_to_left) {
+    private void OpenProfile(HomeModel item, boolean from_right_to_left) {
 
         if(Variables.sharedPreferences.getString(Variables.u_id,"0").equals(item.fb_id)){
 
@@ -771,7 +771,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
         }else {
 
-            Profile_F profile_f = new Profile_F(new Fragment_Callback() {
+            ProfileFragment profile_f = new ProfileFragment(new Fragment_Callback() {
                 @Override
                 public void Responce(Bundle bundle) {
 
@@ -854,7 +854,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
 
     CharSequence[] options;
-    private void Show_video_option(final Home_Get_Set home_get_set) {
+    private void Show_video_option(final HomeModel home_get_set) {
 
          options = new CharSequence[]{ "Save Video","Cancel" };
 
@@ -917,7 +917,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
     }
 
-    public void Save_Video(final Home_Get_Set item){
+    public void Save_Video(final HomeModel item){
 
         Functions.Show_determinent_loader(context,false,false);
         PRDownloader.initialize(getApplicationContext());
@@ -973,7 +973,7 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
 
     }
 
-    public void Applywatermark(final Home_Get_Set item){
+    public void Applywatermark(final HomeModel item){
 
         Bitmap myLogo = ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_watermark_image)).getBitmap();
         Bitmap bitmap_resize=Bitmap.createScaledBitmap(myLogo, 50, 50, false);
@@ -1039,14 +1039,14 @@ public class WatchVideos_F extends AppCompatActivity implements Player.EventList
     }
 
 
-    public void Delete_file_no_watermark(Home_Get_Set item){
+    public void Delete_file_no_watermark(HomeModel item){
         File file=new File(Environment.getExternalStorageDirectory() +"/Aivita/"+item.video_id+"no_watermark"+".mp4");
         if(file.exists()){
             file.delete();
         }
     }
 
-    public void Scan_file(Home_Get_Set item){
+    public void Scan_file(HomeModel item){
         MediaScannerConnection.scanFile(WatchVideos_F.this,
                 new String[] { Environment.getExternalStorageDirectory() +"/Aivita/"+item.video_id+".mp4" },
                 null,

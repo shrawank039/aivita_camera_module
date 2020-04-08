@@ -8,7 +8,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import org.itniorwings.aivita.Chat.Chat_Activity;
-import org.itniorwings.aivita.Home.Home_F;
+import org.itniorwings.aivita.Home.HomeFragment;
 import org.itniorwings.aivita.R;
 import org.itniorwings.aivita.SimpleClasses.Variables;
 import org.itniorwings.aivita.Video_Recording.Video_Recoder_A;
@@ -350,7 +350,7 @@ public class MainMenuFragment extends RootFragment implements View.OnClickListen
             final Fragment result;
             switch (position) {
                 case 0:
-                    result = new Home_F();
+                    result = new HomeFragment();
                     break;
 
                 case 1:

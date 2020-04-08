@@ -23,7 +23,7 @@ import org.itniorwings.aivita.SimpleClasses.ApiRequest;
 import org.itniorwings.aivita.SimpleClasses.Callback;
 import org.itniorwings.aivita.SimpleClasses.Variables;
 import org.itniorwings.aivita.WatchVideos.WatchVideos_F;
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 
 
 import org.json.JSONArray;
@@ -71,7 +71,7 @@ public class Discover_F extends RootFragment {
 
         adapter=new Discover_Adapter(context, datalist, new Discover_Adapter.OnItemClickListener() {
             @Override
-            public void onItemClick(ArrayList<Home_Get_Set> datalist, int postion) {
+            public void onItemClick(ArrayList<HomeModel> datalist, int postion) {
                 OpenWatchVideo(postion,datalist);
             }
         });
@@ -167,10 +167,10 @@ public class Discover_F extends RootFragment {
 
                     JSONArray video_array=discover_object.optJSONArray("sections_videos");
 
-                    ArrayList<Home_Get_Set> video_list = new ArrayList<>();
+                    ArrayList<HomeModel> video_list = new ArrayList<>();
                     for (int i = 0; i < video_array.length(); i++) {
                         JSONObject itemdata = video_array.optJSONObject(i);
-                        Home_Get_Set item = new Home_Get_Set();
+                        HomeModel item = new HomeModel();
 
 
                         JSONObject user_info = itemdata.optJSONObject("user_info");
@@ -222,7 +222,7 @@ public class Discover_F extends RootFragment {
 
 
     // When you click on any Video a new activity is open which will play the Clicked video
-    private void OpenWatchVideo(int postion,ArrayList<Home_Get_Set> data_list) {
+    private void OpenWatchVideo(int postion,ArrayList<HomeModel> data_list) {
 
         Intent intent=new Intent(getActivity(), WatchVideos_F.class);
         intent.putExtra("arraylist", data_list);

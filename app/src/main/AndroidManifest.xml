@@ -162,7 +162,7 @@
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".Firebase_Notification.Notification_Receive"
+            android:name=".FirebaseNotification.Notification_Receive"
             android:permission="android.permission.INTERNET">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

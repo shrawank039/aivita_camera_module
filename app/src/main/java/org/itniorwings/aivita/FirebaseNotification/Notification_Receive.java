@@ -1,4 +1,4 @@
-package org.itniorwings.aivita.Firebase_Notification;
+package org.itniorwings.aivita.FirebaseNotification;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

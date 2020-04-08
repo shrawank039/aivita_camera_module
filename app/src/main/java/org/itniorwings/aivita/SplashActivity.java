@@ -14,7 +14,6 @@ import org.itniorwings.aivita.SimpleClasses.Variables;
 
 public class SplashActivity extends AppCompatActivity {
 
-
     CountDownTimer countDownTimer;
 
     @Override
@@ -30,9 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
         countDownTimer = new CountDownTimer(2500, 500) {
 
-            public void onTick(long millisUntilFinished) {
-
-            }
+            public void onTick(long millisUntilFinished) {}
 
             public void onFinish() {
 
@@ -49,8 +46,6 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         }.start();
-
-
 
     }
 

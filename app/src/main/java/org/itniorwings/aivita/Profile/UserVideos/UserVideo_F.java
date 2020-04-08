@@ -20,7 +20,7 @@ import org.itniorwings.aivita.SimpleClasses.ApiRequest;
 import org.itniorwings.aivita.SimpleClasses.Callback;
 import org.itniorwings.aivita.SimpleClasses.Variables;
 import org.itniorwings.aivita.WatchVideos.WatchVideos_F;
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 import org.itniorwings.aivita.Profile.MyVideos_Adapter;
 
 import org.json.JSONArray;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class UserVideo_F extends Fragment {
 
     public RecyclerView recyclerView;
-     ArrayList<Home_Get_Set> data_list;
+     ArrayList<HomeModel> data_list;
      MyVideos_Adapter adapter;
      View view;
      Context context;
@@ -75,7 +75,7 @@ public class UserVideo_F extends Fragment {
         data_list=new ArrayList<>();
         adapter=new MyVideos_Adapter(context, data_list, new MyVideos_Adapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int postion,Home_Get_Set item, View view) {
+            public void onItemClick(int postion, HomeModel item, View view) {
 
                 OpenWatchVideo(postion);
 
@@ -162,7 +162,7 @@ public class UserVideo_F extends Fragment {
                     for (int i=0;i<user_videos.length();i++) {
                         JSONObject itemdata = user_videos.optJSONObject(i);
 
-                        Home_Get_Set item=new Home_Get_Set();
+                        HomeModel item=new HomeModel();
                         item.fb_id=user_id;
 
                         item.first_name=user_info.optString("first_name");

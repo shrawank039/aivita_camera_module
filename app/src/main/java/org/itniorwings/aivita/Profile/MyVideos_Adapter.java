@@ -14,7 +14,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 import org.itniorwings.aivita.R;
 
 
@@ -30,14 +30,14 @@ public class MyVideos_Adapter extends RecyclerView.Adapter<MyVideos_Adapter.Cust
 
     public Context context;
     private MyVideos_Adapter.OnItemClickListener listener;
-    private ArrayList<Home_Get_Set> dataList;
+    private ArrayList<HomeModel> dataList;
 
 
       public interface OnItemClickListener {
-        void onItemClick(int postion, Home_Get_Set item, View view);
+        void onItemClick(int postion, HomeModel item, View view);
     }
 
-    public MyVideos_Adapter(Context context, ArrayList<Home_Get_Set> dataList, MyVideos_Adapter.OnItemClickListener listener) {
+    public MyVideos_Adapter(Context context, ArrayList<HomeModel> dataList, MyVideos_Adapter.OnItemClickListener listener) {
         this.context = context;
         this.dataList = dataList;
         this.listener = listener;
@@ -74,7 +74,7 @@ public class MyVideos_Adapter extends RecyclerView.Adapter<MyVideos_Adapter.Cust
 
         }
 
-        public void bind(final int position,final Home_Get_Set item, final MyVideos_Adapter.OnItemClickListener listener) {
+        public void bind(final int position, final HomeModel item, final MyVideos_Adapter.OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,7 +91,7 @@ public class MyVideos_Adapter extends RecyclerView.Adapter<MyVideos_Adapter.Cust
 
     @Override
     public void onBindViewHolder(final MyVideos_Adapter.CustomViewHolder holder, final int i) {
-        final Home_Get_Set item= dataList.get(i);
+        final HomeModel item= dataList.get(i);
         holder.setIsRecyclable(false);
 
 

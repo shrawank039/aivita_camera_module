@@ -455,11 +455,11 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
                     if(code.equals("200")){
 
                         Variables.sharedPreferences.edit().putString(Variables.u_pic,image_link).commit();
-                        Profile_F.pic_url=image_link;
+                        ProfileFragment.pic_url=image_link;
                         Variables.user_pic=image_link;
 
                         Picasso.with(context)
-                                .load(Profile_F.pic_url)
+                                .load(ProfileFragment.pic_url)
                                 .placeholder(context.getResources().getDrawable(R.drawable.profile_image_placeholder))
                                 .resize(200,200).centerCrop().into(profile_image);
 

@@ -1,6 +1,6 @@
 package org.itniorwings.aivita.Discover;
 
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,6 @@ public class Discover_Get_Set {
 
     String title,discription;
 
-    ArrayList<Home_Get_Set> arrayList;
+    ArrayList<HomeModel> arrayList;
 
 }
