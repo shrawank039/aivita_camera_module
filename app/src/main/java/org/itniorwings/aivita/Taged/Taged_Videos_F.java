@@ -28,7 +28,7 @@ import org.itniorwings.aivita.SimpleClasses.Callback;
 import org.itniorwings.aivita.SimpleClasses.Functions;
 import org.itniorwings.aivita.SimpleClasses.Variables;
 import org.itniorwings.aivita.WatchVideos.WatchVideos_F;
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 import org.itniorwings.aivita.Profile.MyVideos_Adapter;
 
 import org.json.JSONArray;
@@ -55,7 +55,7 @@ public class Taged_Videos_F extends RootFragment {
 
 
     RecyclerView recyclerView;
-    ArrayList<Home_Get_Set> data_list;
+    ArrayList<HomeModel> data_list;
     MyVideos_Adapter adapter;
 
     String tag_txt;
@@ -171,7 +171,7 @@ public class Taged_Videos_F extends RootFragment {
         data_list=new ArrayList<>();
         adapter=new MyVideos_Adapter(context, data_list, new MyVideos_Adapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int postion,Home_Get_Set item, View view) {
+            public void onItemClick(int postion, HomeModel item, View view) {
 
                 OpenWatchVideo(postion);
 
@@ -239,7 +239,7 @@ public class Taged_Videos_F extends RootFragment {
                         JSONObject itemdata = msgArray.optJSONObject(i);
                         JSONObject user_info=itemdata.optJSONObject("user_info");
 
-                        Home_Get_Set item=new Home_Get_Set();
+                        HomeModel item=new HomeModel();
                         item.fb_id=itemdata.optString("fb_id");
 
                         Log.d("resp", item.fb_id);

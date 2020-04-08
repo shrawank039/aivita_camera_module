@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import org.itniorwings.aivita.R;
 import org.itniorwings.aivita.SimpleClasses.Variables;
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class Discover_Adapter extends RecyclerView.Adapter<Discover_Adapter.Cust
     ArrayList<Discover_Get_Set> datalist_filter;
 
     public interface OnItemClickListener {
-        void onItemClick(ArrayList<Home_Get_Set> video_list, int postion);
+        void onItemClick(ArrayList<HomeModel> video_list, int postion);
     }
 
     public Discover_Adapter.OnItemClickListener listener;
@@ -133,10 +133,10 @@ public class Discover_Adapter extends RecyclerView.Adapter<Discover_Adapter.Cust
     class Horizontal_Adapter extends RecyclerView.Adapter<Horizontal_Adapter.CustomViewHolder> {
         public Context context;
 
-        ArrayList<Home_Get_Set> datalist;
+        ArrayList<HomeModel> datalist;
 
 
-        public Horizontal_Adapter(Context context, ArrayList<Home_Get_Set> arrayList) {
+        public Horizontal_Adapter(Context context, ArrayList<HomeModel> arrayList) {
             this.context = context;
             datalist = arrayList;
         }
@@ -165,7 +165,7 @@ public class Discover_Adapter extends RecyclerView.Adapter<Discover_Adapter.Cust
 
             }
 
-            public void bind(final int pos, final ArrayList<Home_Get_Set> datalist) {
+            public void bind(final int pos, final ArrayList<HomeModel> datalist) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -182,7 +182,7 @@ public class Discover_Adapter extends RecyclerView.Adapter<Discover_Adapter.Cust
             holder.setIsRecyclable(false);
 
             try {
-                Home_Get_Set item = datalist.get(i);
+                HomeModel item = datalist.get(i);
                 holder.bind(i, datalist);
 
 

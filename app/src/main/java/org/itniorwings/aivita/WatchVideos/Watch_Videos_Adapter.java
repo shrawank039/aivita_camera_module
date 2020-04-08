@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.itniorwings.aivita.Home.Home_Get_Set;
+import org.itniorwings.aivita.Home.HomeModel;
 import org.itniorwings.aivita.R;
 
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -25,17 +25,17 @@ public class Watch_Videos_Adapter extends RecyclerView.Adapter<Watch_Videos_Adap
 
     public Context context;
     private Watch_Videos_Adapter.OnItemClickListener listener;
-    private ArrayList<Home_Get_Set> dataList;
+    private ArrayList<HomeModel> dataList;
 
 
 
     // meker the onitemclick listener interface and this interface is impliment in Chatinbox activity
     // for to do action when user click on item
     public interface OnItemClickListener {
-        void onItemClick(int positon, Home_Get_Set item, View view);
+        void onItemClick(int positon, HomeModel item, View view);
     }
 
-    public Watch_Videos_Adapter(Context context, ArrayList<Home_Get_Set> dataList, Watch_Videos_Adapter.OnItemClickListener listener) {
+    public Watch_Videos_Adapter(Context context, ArrayList<HomeModel> dataList, Watch_Videos_Adapter.OnItemClickListener listener) {
         this.context = context;
         this.dataList = dataList;
         this.listener = listener;
@@ -58,7 +58,7 @@ public class Watch_Videos_Adapter extends RecyclerView.Adapter<Watch_Videos_Adap
 
     @Override
     public void onBindViewHolder(final Watch_Videos_Adapter.CustomViewHolder holder, final int i) {
-        final Home_Get_Set item= dataList.get(i);
+        final HomeModel item= dataList.get(i);
 
         try{
 
@@ -157,7 +157,7 @@ public class Watch_Videos_Adapter extends RecyclerView.Adapter<Watch_Videos_Adap
             shared_layout=view.findViewById(R.id.shared_layout);
         }
 
-        public void bind(final int postion,final Home_Get_Set item, final Watch_Videos_Adapter.OnItemClickListener listener) {
+        public void bind(final int postion, final HomeModel item, final Watch_Videos_Adapter.OnItemClickListener listener) {
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

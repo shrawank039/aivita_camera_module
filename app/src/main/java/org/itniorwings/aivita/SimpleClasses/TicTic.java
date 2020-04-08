@@ -7,10 +7,6 @@ import com.google.firebase.FirebaseApp;
 
 import io.fabric.sdk.android.Fabric;
 
-/**
- * Created by AQEEL on 3/18/2019.
- */
-
 public class TicTic extends Application {
 
     @Override

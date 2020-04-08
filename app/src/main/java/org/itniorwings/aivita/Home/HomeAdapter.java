@@ -1,7 +1,7 @@
 package org.itniorwings.aivita.Home;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,43 +14,47 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.squareup.picasso.Picasso;
 
-import org.itniorwings.aivita.Profile.Profile_F;
 import org.itniorwings.aivita.R;
-import org.itniorwings.aivita.SoundLists.FavouriteSounds.Favourite_Sound_F;
 
 import java.util.ArrayList;
 
-import timber.log.Timber;
-public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHolder> {
 
     public Context context;
-    private Home_Adapter.OnItemClickListener listener;
-    private ArrayList<Home_Get_Set> dataList;
+    private HomeAdapter.OnItemClickListener listener;
+    private ArrayList<HomeModel> dataList;
 
+    // meker the onitemclick listener interface and this interface is impliment in Chatinbox activity
+    // for to do action when user click on item
     public interface OnItemClickListener {
-        void onItemClick(int positon, Home_Get_Set item, View view);
+        void onItemClick(int positon, HomeModel item, View view);
     }
-    public Home_Adapter(Context context, ArrayList<Home_Get_Set> dataList, Home_Adapter.OnItemClickListener listener) {
+
+    public HomeAdapter(Context context, ArrayList<HomeModel> dataList, HomeAdapter.OnItemClickListener listener) {
         this.context = context;
         this.dataList = dataList;
         this.listener = listener;
     }
+
     @Override
-    public Home_Adapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewtype) {
+    public HomeAdapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewtype) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_home_layout, null);
         view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT));
-        Home_Adapter.CustomViewHolder viewHolder = new Home_Adapter.CustomViewHolder(view);
+        HomeAdapter.CustomViewHolder viewHolder = new HomeAdapter.CustomViewHolder(view);
         return viewHolder;
     }
+
     @Override
     public int getItemCount() {
         return dataList.size();
     }
-    @Override
-    public void onBindViewHolder(final Home_Adapter.CustomViewHolder holder, final int i) {
-        final Home_Get_Set item = dataList.get(i);
-        holder.setIsRecyclable(false);
 
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onBindViewHolder(final HomeAdapter.CustomViewHolder holder, final int i) {
+        final HomeModel item = dataList.get(i);
+        holder.setIsRecyclable(false);
 
         try {
 
@@ -69,24 +73,26 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
                     .placeholder(context.getResources().getDrawable(R.drawable.profile_image_placeholder))
                     .resize(100, 100).into(holder.user_pic);
 
-            if ((item.sound_name == null || item.sound_name.equals("")) || item.sound_name.equals("null")) item.sound_pic = item.profile_pic;
-            else if (item.sound_pic.equals("")) item.sound_pic = "Null";
+            if ((item.sound_name == null || item.sound_name.equals("")) || item.sound_name.equals("null"))
+                item.sound_pic = item.profile_pic;
+            else if (item.sound_pic.equals(""))
+                item.sound_pic = "Null";
 
             Picasso.with(context).
                     load(item.sound_pic)
                     .placeholder(context.getResources().getDrawable(R.drawable.ic_round_music))
                     .resize(100, 100).into(holder.sound_image);
 
-            if (item.liked.equals("1")) holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.likebg));
-            else holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_like));
+            if (item.liked.equals("1"))
+                holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.likebg));
+            else
+                holder.like_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_like));
 
             holder.like_txt.setText(item.like_count);
             holder.comment_txt.setText(item.video_comment_count);
 
+        } catch (Exception e) {}
 
-        } catch (Exception e) {
-            Timber.e(e.getLocalizedMessage());
-        }
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -95,14 +101,12 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
         TextView username, desc_txt, sound_name;
         ImageView user_pic, sound_image;
 
-        LinearLayout like_layout, comment_layout, shared_layout,sound_image_layout;
+        LinearLayout like_layout, comment_layout, shared_layout;
         ImageView like_image, comment_image, Home_follow_btn;
         TextView like_txt, comment_txt;
 
-
         public CustomViewHolder(View view) {
             super(view);
-
             playerview = view.findViewById(R.id.playerview);
             username = view.findViewById(R.id.username);
             user_pic = view.findViewById(R.id.user_pic);
@@ -117,10 +121,9 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
             comment_image = view.findViewById(R.id.comment_image);
             comment_txt = view.findViewById(R.id.comment_txt);
             shared_layout = view.findViewById(R.id.shared_layout);
-            sound_image_layout=view.findViewById(R.id.sound_image_layout);
         }
 
-        public void bind(final int postion, final Home_Get_Set item, final Home_Adapter.OnItemClickListener listener) {
+        public void bind(final int postion, final HomeModel item, final HomeAdapter.OnItemClickListener listener) {
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,27 +131,20 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
                     listener.onItemClick(postion, item, v);
                 }
             });
+
             user_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(postion, item, v);
                 }
             });
+
             username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     listener.onItemClick(postion, item, v);
                 }
             });
-            Home_follow_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Home_follow_btn.setImageDrawable(context.getDrawable(R.drawable.ic_correct));
-
-                }
-            });
-
 
             like_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -157,22 +153,30 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.CustomViewHo
                 }
             });
 
-
             comment_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     listener.onItemClick(postion, item, v);
                 }
             });
+
             shared_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    listener.onItemClick(postion, item, v);
+                }
+            });
 
+            Home_follow_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Home_follow_btn.setImageDrawable(context.getDrawable(R.drawable.ic_correct));
                     listener.onItemClick(postion, item, v);
                 }
             });
 
         }
+
     }
+
 }

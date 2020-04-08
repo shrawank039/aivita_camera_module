@@ -9,13 +9,13 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
-import org.itniorwings.aivita.Following.Following_F;
+import org.itniorwings.aivita.Following.FollowingFragment;
 import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
 import org.itniorwings.aivita.Main_Menu.RelateToFragment_OnBack.RootFragment;
 import org.itniorwings.aivita.Profile.Liked_Videos.Liked_Video_F;
 import org.itniorwings.aivita.Profile.UserVideos.UserVideo_F;
 import org.itniorwings.aivita.R;
-import org.itniorwings.aivita.See_Full_Image_F;
+import org.itniorwings.aivita.SeeFullImageFragment;
 import org.itniorwings.aivita.SimpleClasses.ApiRequest;
 import org.itniorwings.aivita.SimpleClasses.Callback;
 import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
@@ -432,9 +432,9 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
                 JSONObject user_info=data.optJSONObject("user_info");
                 username.setText("@aivita"+Objects.requireNonNull(user_info).optString("first_name")+user_info.optString("last_name"));
 
-                Profile_F.pic_url=user_info.optString("profile_pic");
+                ProfileFragment.pic_url=user_info.optString("profile_pic");
                 Picasso.with(context)
-                        .load(Profile_F.pic_url)
+                        .load(ProfileFragment.pic_url)
                         .placeholder(context.getResources().getDrawable(R.drawable.profile_image_placeholder))
                         .resize(200,200).centerCrop().into(imageView);
 
@@ -502,7 +502,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
     //this method will get the big size of profile image.
     public void OpenfullsizeImage(String url){
-        See_Full_Image_F see_image_f = new See_Full_Image_F();
+        SeeFullImageFragment see_image_f = new SeeFullImageFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         Bundle args = new Bundle();
@@ -546,7 +546,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
     public void Open_Following(){
 
-        Following_F following_f = new Following_F(new Fragment_Callback() {
+        FollowingFragment following_f = new FollowingFragment(new Fragment_Callback() {
             @Override
             public void Responce(Bundle bundle) {
 
@@ -566,7 +566,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
     }
 
     public void Open_Followers(){
-        Following_F following_f = new Following_F(new Fragment_Callback() {
+        FollowingFragment following_f = new FollowingFragment(new Fragment_Callback() {
             @Override
             public void Responce(Bundle bundle) {
                 Call_Api_For_get_Allvideos();

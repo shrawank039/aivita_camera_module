@@ -47,7 +47,7 @@ import android.widget.Toast;
 import org.itniorwings.aivita.Chat.Audio.Play_Audio_F;
 import org.itniorwings.aivita.Chat.Audio.SendAudio;
 import org.itniorwings.aivita.R;
-import org.itniorwings.aivita.See_Full_Image_F;
+import org.itniorwings.aivita.SeeFullImageFragment;
 import org.itniorwings.aivita.SimpleClasses.ApiRequest;
 import org.itniorwings.aivita.SimpleClasses.Functions;
 import org.itniorwings.aivita.SimpleClasses.Variables;
@@ -1621,7 +1621,7 @@ public class Chat_Activity extends Fragment {
 
     //this method will get the big size of image in private chat
     public void OpenfullsizeImage(Chat_GetSet item){
-        See_Full_Image_F see_image_f = new See_Full_Image_F();
+        SeeFullImageFragment see_image_f = new SeeFullImageFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         Bundle args = new Bundle();

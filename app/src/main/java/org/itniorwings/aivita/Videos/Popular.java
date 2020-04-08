@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.annotation.Nullable;
 
-import org.itniorwings.aivita.Following.Following_F;
+import org.itniorwings.aivita.Following.FollowingFragment;
 import org.itniorwings.aivita.R;
 import org.itniorwings.aivita.SimpleClasses.ApiRequest;
 import org.itniorwings.aivita.SimpleClasses.Callback;
@@ -47,7 +47,7 @@ import org.itniorwings.aivita.Comments.Comment_F;
 import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
 import org.itniorwings.aivita.Main_Menu.MainMenuFragment;
 import org.itniorwings.aivita.Main_Menu.RelateToFragment_OnBack.RootFragment;
-import org.itniorwings.aivita.Profile.Profile_F;
+import org.itniorwings.aivita.Profile.ProfileFragment;
 import org.itniorwings.aivita.SimpleClasses.API_CallBack;
 import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
 import org.itniorwings.aivita.SimpleClasses.Fragment_Data_Send;
@@ -188,7 +188,7 @@ public class Popular extends RootFragment implements Player.EventListener, Fragm
 
     public void Open_Following(){
 
-        Following_F following_f = new Following_F(new Fragment_Callback() {
+        FollowingFragment following_f = new FollowingFragment(new Fragment_Callback() {
             @Override
             public void Responce(Bundle bundle) {
 
@@ -760,7 +760,7 @@ public class Popular extends RootFragment implements Player.EventListener, Fragm
             profile.select();
 
         }else {
-            Profile_F profile_f = new Profile_F(new Fragment_Callback() {
+            ProfileFragment profile_f = new ProfileFragment(new Fragment_Callback() {
                 @Override
                 public void Responce(Bundle bundle) {
                     Call_Api_For_Singlevideos(currentPage);

@@ -2,7 +2,6 @@ package org.itniorwings.aivita.Videos;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
@@ -11,10 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.annotation.Nullable;
 
-import org.itniorwings.aivita.Following.Following_F;
-import org.itniorwings.aivita.Home.Home_Get_Set;
-import org.itniorwings.aivita.Profile.Edit_Profile_F;
-import org.itniorwings.aivita.Profile.UserVideos.UserVideo_F;
+import org.itniorwings.aivita.Following.FollowingFragment;
 import org.itniorwings.aivita.R;
 import org.itniorwings.aivita.SimpleClasses.ApiRequest;
 import org.itniorwings.aivita.SimpleClasses.Callback;
@@ -51,14 +47,13 @@ import org.itniorwings.aivita.Comments.Comment_F;
 import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
 import org.itniorwings.aivita.Main_Menu.MainMenuFragment;
 import org.itniorwings.aivita.Main_Menu.RelateToFragment_OnBack.RootFragment;
-import org.itniorwings.aivita.Profile.Profile_F;
+import org.itniorwings.aivita.Profile.ProfileFragment;
 import org.itniorwings.aivita.SimpleClasses.API_CallBack;
 import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
 import org.itniorwings.aivita.SimpleClasses.Fragment_Data_Send;
 import org.itniorwings.aivita.SimpleClasses.Functions;
 import org.itniorwings.aivita.SimpleClasses.Variables;
 import org.itniorwings.aivita.Taged.Taged_Videos_F;
-import org.itniorwings.aivita.VideoAction.VideoAction_F;
 
 import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
@@ -83,10 +78,6 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import org.json.JSONArray;
@@ -197,7 +188,7 @@ public class Followings extends RootFragment implements Player.EventListener, Fr
 
     public void Open_Following(){
 
-        Following_F following_f = new Following_F(new Fragment_Callback() {
+        FollowingFragment following_f = new FollowingFragment(new Fragment_Callback() {
             @Override
             public void Responce(Bundle bundle) {
 
@@ -769,7 +760,7 @@ public class Followings extends RootFragment implements Player.EventListener, Fr
             profile.select();
 
         }else {
-            Profile_F profile_f = new Profile_F(new Fragment_Callback() {
+            ProfileFragment profile_f = new ProfileFragment(new Fragment_Callback() {
                 @Override
                 public void Responce(Bundle bundle) {
                     Call_Api_For_Singlevideos(currentPage);
