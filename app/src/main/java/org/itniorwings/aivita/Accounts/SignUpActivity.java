@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ActionMenuView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import org.itniorwings.aivita.ApiServices.ApiClient;
 import org.itniorwings.aivita.ApiServices.RetrofitApi;
 import org.itniorwings.aivita.R;
+
 import org.itniorwings.aivita.model.RegisterModel;
 
 import java.io.ByteArrayOutputStream;
@@ -40,9 +42,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    TextView tv_username,tv_useremail,txtphone,password;
+    TextView tv_username,tv_useremail,txtphone;
     Button btnSignUp;
     ImageView imageView ;
     Button btn_take_photo,btn_save;
@@ -50,6 +52,7 @@ public class SignUp extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     final int MY_PERMISSIONS_REQUEST_WRITE = 103;
 
+    EditText name,email,phone,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +60,17 @@ public class SignUp extends AppCompatActivity {
         TextView relogin=findViewById(R.id.tv_loginagain);
         tv_username=findViewById(R.id.tv_username);
         tv_useremail=findViewById(R.id.tv_useremail);
-        password=findViewById(R.id.password);
+        // password=findViewById(R.id.password);
         txtphone=findViewById(R.id.txtphone);
         btnSignUp=findViewById(R.id.btnSignUp);
         btn_take_photo=findViewById(R.id.btn_take_photo);
         imageView=findViewById(R.id.imageView);
+
+        name=findViewById(R.id.simpleEditText);
+        email=findViewById(R.id.edtemail);
+        phone=findViewById(R.id.edtphone);
+        password=findViewById(R.id.password);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE);
@@ -69,7 +78,7 @@ public class SignUp extends AppCompatActivity {
         relogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignUp.this,Login_A.class));
+                startActivity(new Intent(SignUpActivity.this,Login_A.class));
             }
         });
 
@@ -84,32 +93,32 @@ public class SignUp extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name=tv_username.getText().toString();
-                String email=tv_useremail.getText().toString();
-                String phone=txtphone.getText().toString();
+                String name1=name.getText().toString();
+                String email1=email.getText().toString();
+                String phone1=phone.getText().toString();
                 String pass=password.getText().toString();
 
-                if(name.equals("")){
-                    Toast.makeText(SignUp.this,"Enter First Name",Toast.LENGTH_LONG).show();
+                if(name1.equals("")){
+                    Toast.makeText(SignUpActivity.this,"Enter First Name",Toast.LENGTH_LONG).show();
                     return;
                 }
-                else if(email.equals("")){
-                    Toast.makeText(SignUp.this,"Enter First Name",Toast.LENGTH_LONG).show();
+                else if(email1.equals("")){
+                    Toast.makeText(SignUpActivity.this,"Enter First Name",Toast.LENGTH_LONG).show();
                     return;
                 }
-                else if(phone.equals("")){
-                    Toast.makeText(SignUp.this,"Enter First Name",Toast.LENGTH_LONG).show();
+                else if(phone1.equals("")){
+                    Toast.makeText(SignUpActivity.this,"Enter First Name",Toast.LENGTH_LONG).show();
                     return;
                 }
                 else if(pass.equals("")){
-                    Toast.makeText(SignUp.this,"Enter First Name",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpActivity.this,"Enter First Name",Toast.LENGTH_LONG).show();
                     return;
                 }
 
 
                 else{
                     // progress_bar.setVisibility(View.VISIBLE);
-                    postDriver(name,email,phone,pass,imageImagePath);
+                    postDriver(name1,email1,phone1,pass,imageImagePath);
                 }
             }
         });
@@ -152,7 +161,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
                 //  progress_bar.setVisibility(View.GONE);
-                Toast.makeText(SignUp.this,"Data submitted successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpActivity.this,"Data submitted successfully",Toast.LENGTH_LONG).show();
                 finish();
 
 
@@ -183,7 +192,7 @@ public class SignUp extends AppCompatActivity {
 
     private void selectImage() {
         final CharSequence[] options = {getString(R.string.take_photo), getString(R.string.choose_from_gallery), getString(R.string.cancel)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
         builder.setTitle(getString(R.string.add_image));
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override

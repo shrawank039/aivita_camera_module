@@ -8,7 +8,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL ="http://oestech.com/moby_quiz/index.php/Moby_api/";
+    public static final String BASE_URL ="https://infinityfacts.com/aivita/API/";
     private static Retrofit retrofit;
 
     static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

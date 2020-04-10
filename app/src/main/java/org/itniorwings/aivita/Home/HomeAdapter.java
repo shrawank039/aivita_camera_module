@@ -101,7 +101,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         TextView username, desc_txt, sound_name;
         ImageView user_pic, sound_image;
 
-        LinearLayout like_layout, comment_layout, shared_layout;
+        LinearLayout like_layout, comment_layout, shared_layout,sound_image_layout;
         ImageView like_image, comment_image, Home_follow_btn;
         TextView like_txt, comment_txt;
 
@@ -121,6 +121,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
             comment_image = view.findViewById(R.id.comment_image);
             comment_txt = view.findViewById(R.id.comment_txt);
             shared_layout = view.findViewById(R.id.shared_layout);
+            sound_image_layout=view.findViewById(R.id.sound_image_layout);
         }
 
         public void bind(final int postion, final HomeModel item, final HomeAdapter.OnItemClickListener listener) {
@@ -172,6 +173,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
                 public void onClick(View v) {
                     Home_follow_btn.setImageDrawable(context.getDrawable(R.drawable.ic_correct));
                     listener.onItemClick(postion, item, v);
+                }
+            });
+            sound_image_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(postion,item,v);
                 }
             });
 

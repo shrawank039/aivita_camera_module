@@ -55,50 +55,29 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Video_Recoder_A extends AppCompatActivity implements View.OnClickListener {
-
-
     CameraView cameraView;
-
     int number=0;
-
     ArrayList<String> videopaths=new ArrayList<>();
-
     ImageView record_image;
     ImageView done_btn;
     boolean is_recording=false;
     boolean is_flash_on=false;
-
     ImageView flash_btn;
-
     SegmentedProgressBar video_progress;
-
     LinearLayout camera_options;
-
     ImageView rotate_camera;
-
     public static int Sounds_list_Request_code=1;
     TextView add_sound_txt;
-
-
     int sec_passed=0;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Hide_navigation();
         setContentView(R.layout.activity_video_recoder);
-
-
         sec_passed=0;
         Variables.Selected_sound_id="null";
-
         cameraView = findViewById(R.id.camera);
         camera_options=findViewById(R.id.camera_options);
-
-
-
         cameraView.addCameraKitListener(new CameraKitEventListener() {
             @Override
             public void onEvent(CameraKitEvent cameraKitEvent) {
@@ -181,63 +160,37 @@ public class Video_Recoder_A extends AppCompatActivity implements View.OnClickLi
         });
 
 
-
-
         video_progress=findViewById(R.id.video_progress);
         video_progress.enableAutoProgressView(18000);
         video_progress.setDividerColor(Color.WHITE);
         video_progress.setDividerEnabled(true);
         video_progress.setDividerWidth(4);
         video_progress.setShader(new int[]{Color.CYAN, Color.CYAN, Color.CYAN});
-
-        video_progress.SetListener(new ProgressBarListener() {
-            @Override
-            public void TimeinMill(long mills) {
-                sec_passed = (int) (mills/1000);
-
-                if(sec_passed>17){
-                    Start_or_Stop_Recording();
-                }
-
+        video_progress.SetListener(mills -> {
+            sec_passed = (int) (mills/1000);
+            if(sec_passed>17){
+                Start_or_Stop_Recording();
             }
         });
-
     }
-
-
-
-
     // if the Recording is stop then it we start the recording
     // and if the mobile is recording the video then it will stop the recording
     public void Start_or_Stop_Recording() {
-
         if (!is_recording && sec_passed<18) {
             number=number+1;
-
             is_recording=true;
-
-            File file = new File(Variables.root + "/" + "aivita"+(number)+".mp4");
-            videopaths.add(Variables.root + "/" + "aivita"+(number)+".mp4");
+            File file = new File(Variables.root+"/"+ "aivita"+(number)+".mp4");
+            videopaths.add(Variables.root+"/"+"aivita"+(number)+".mp4");
             cameraView.captureVideo(file);
-
-
             if(audio!=null)
             audio.start();
-
-
-
             video_progress.resume();
-
-
             done_btn.setBackgroundResource(R.drawable.ic_not_done);
             done_btn.setEnabled(false);
-
             record_image.setImageDrawable(getResources().getDrawable(R.drawable.ic_recoding_yes));
-
             camera_options.setVisibility(View.GONE);
             add_sound_txt.setClickable(false);
             rotate_camera.setVisibility(View.GONE);
-
         }
 
         else if (is_recording) {
@@ -279,14 +232,9 @@ public class Video_Recoder_A extends AppCompatActivity implements View.OnClickLi
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-
-                runOnUiThread(new Runnable() {
-                    public void run() {
-
-                        progressDialog.setMessage("Please wait...");
-                        progressDialog.show();
-                    }
+                runOnUiThread(() -> {
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.show();
                 });
 
                 ArrayList<String> video_list=new ArrayList<>();
@@ -350,29 +298,21 @@ public class Video_Recoder_A extends AppCompatActivity implements View.OnClickLi
                     out.writeContainer(fos.getChannel());
                     fos.close();
 
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-
-                            if(audio!=null)
-                              Merge_withAudio();
-                            else {
-                                Go_To_preview_Activity();
-                            }
-
+                    runOnUiThread(()->{
+                        progressDialog.dismiss();
+                        if(audio!=null)
+                          Merge_withAudio();
+                        else {
+                            Go_To_preview_Activity();
                         }
+
                     });
-
-
 
                 } catch (Exception e) {
 
                 }
             }
         }).start();
-
-
-
         return true;
     }
 

@@ -45,7 +45,7 @@
                     android:textSize="15dp"
                     android:id="@+id/username"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:textColor="@color/standard_white"
                     android:layout_marginLeft="10dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
                     android:text="1 January"
-                    android:textColor="@color/white"
+                    android:textColor="@color/redcolor"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     />
@@ -70,7 +70,7 @@
                 android:textSize="13dp"
                 android:maxLines="2"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/white"
+                android:textColor="@color/standard_white"
                 android:layout_marginLeft="10dp"
 
                 />

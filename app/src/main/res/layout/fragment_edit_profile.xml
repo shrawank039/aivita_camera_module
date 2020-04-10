@@ -134,7 +134,7 @@
                             android:textColorHint="@color/app_color"
                             android:layout_toRightOf="@+id/profile_icon"
                             android:layout_marginLeft="10dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/standard_white"
                             android:backgroundTint="@color/transparent"/>
 
                         <LinearLayout
@@ -174,7 +174,7 @@
                             android:textColorHint="@color/app_color"
                             android:layout_toRightOf="@+id/profile_icon1"
                             android:layout_marginLeft="10dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/standard_white"
                             android:backgroundTint="@color/transparent"/>
 
                         <LinearLayout
@@ -266,7 +266,7 @@
                         android:nextFocusForward="@+id/jobtitle_edit"
                         android:id="@+id/user_bio_edit"
                         android:textColorHint="@color/gainsboro"
-                        android:textColor="@color/dimgray"
+                        android:textColor="@color/standard_white"
                         android:backgroundTint="@color/dark_gray"/>
                 </LinearLayout>
 
@@ -283,7 +283,7 @@
                         android:padding="10dp"
                         android:elevation="0.5dp"
                         android:textStyle="italic"
-                        android:background="@color/app_color"
+                        android:background="@color/transparent"
                         android:textColor="@color/dimgray"/>
 
                     <EditText
@@ -315,7 +315,7 @@
                         android:padding="10dp"
                         android:elevation="0.5dp"
                         android:textStyle="italic"
-                        android:background="@color/app_color"
+                        android:background="@color/transparent"
                         android:textColor="@color/dimgray"/>
 
                     <EditText
@@ -347,7 +347,7 @@
                         android:padding="10dp"
                         android:elevation="0.5dp"
                         android:textStyle="italic"
-                        android:background="@color/app_color"
+                        android:background="@color/transparent"
                         android:textColor="@color/dimgray"/>
 
                     <EditText

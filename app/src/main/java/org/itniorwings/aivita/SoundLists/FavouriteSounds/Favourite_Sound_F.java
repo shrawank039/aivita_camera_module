@@ -116,7 +116,6 @@ public class Favourite_Sound_F extends RootFragment implements Player.EventListe
             @Override
             public void onRefresh() {
 
-
                 Call_Api_For_get_allsound();
             }
         });

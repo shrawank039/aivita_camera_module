@@ -50,7 +50,7 @@ public class ProfileFragment extends RootFragment implements View.OnClickListene
     private Context context;
 
     private TextView follow_unfollow_btn;
-    private TextView username, video_count_txt;
+    private TextView username,username1, video_count_txt;
     private ImageView imageView;
     private TextView follow_count_txt, fans_count_txt, heart_count_txt;
     private ImageView back_btn, setting_btn;
@@ -132,6 +132,7 @@ public class ProfileFragment extends RootFragment implements View.OnClickListene
     public View init() {
 
         username = view.findViewById(R.id.username);
+        username1=view.findViewById(R.id.username1);
         imageView = view.findViewById(R.id.user_image);
         imageView.setOnClickListener(this);
 
@@ -392,6 +393,7 @@ public class ProfileFragment extends RootFragment implements View.OnClickListene
                 JSONObject data = msgArray.getJSONObject(0);
                 JSONObject user_info = data.optJSONObject("user_info");
                 username.setText(user_info.optString("first_name") + " " + user_info.optString("last_name"));
+                username1.setText("@aivita"+user_info.optString("first_name")+ user_info.optString("last_name"));
 
                 ProfileFragment.pic_url = user_info.optString("profile_pic");
                 Picasso.with(context)
@@ -452,10 +454,8 @@ public class ProfileFragment extends RootFragment implements View.OnClickListene
         }
 
         Functions.Call_Api_For_Follow_or_unFollow(getActivity(),
-
                 Variables.sharedPreferences.getString(Variables.u_id, ""), user_id, send_status,
                 new API_CallBack() {
-
                     @Override
                     public void ArrayData(ArrayList arrayList) {}
 

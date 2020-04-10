@@ -1,7 +1,6 @@
 package org.itniorwings.aivita.ApiServices;
 
-
-
+import org.itniorwings.aivita.model.LoginModel;
 import org.itniorwings.aivita.model.RegisterModel;
 
 import java.util.List;
@@ -17,34 +16,22 @@ import retrofit2.http.Part;
 
 public interface RetrofitApi {
 
+    @POST("index.php?p=user_login")
+    @FormUrlEncoded
+    Call<LoginModel> login(
+            @Field("username") String email,
+            @Field("password") String password);
+
     @Multipart
-    @POST("RegisterModel")
+    @POST("index.php?p=user_registration")
     Call<RegisterModel> Register(@Part("username") RequestBody username,
                                  @Part("email") RequestBody email,
                                  @Part("phone") RequestBody phone,
                                  @Part("password") RequestBody password ,
 
-                                 @Part("fileToUpload\"; filename=\"profile.jpg") RequestBody image
+                                 @Part("fileToUpload") RequestBody image
 
     );
-   /* @POST("login")
-    @FormUrlEncoded
-    Call<LoginModel> login(
-            @Field("email") String email,
-            @Field("password") String password);*/
-
-/*    @POST("user_reg")
-    @FormUrlEncoded
-    Call<RegisterModel> Register(
-            @Field("email") String email,
-            @Field("username ") String username,
-            @Field("phone") String phone,
-            @Field("password") String password
-
-    );*/
-/*@POST("user_reg")
-Call<String> Register (@Body RequestBody body);*/
-
 
 
 }

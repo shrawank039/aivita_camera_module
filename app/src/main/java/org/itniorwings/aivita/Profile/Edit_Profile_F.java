@@ -1,6 +1,4 @@
 package org.itniorwings.aivita.Profile;
-
-
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,69 +62,53 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import timber.log.Timber;
+
 import static android.app.Activity.RESULT_OK;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Edit_Profile_F extends RootFragment implements View.OnClickListener {
-
     View view;
     Context context;
-
+    SharedPreferences sharedPreferences;
     public Edit_Profile_F() {
 
     }
-
     Fragment_Callback fragment_callback;
     public Edit_Profile_F(Fragment_Callback fragment_callback) {
         this.fragment_callback=fragment_callback;
     }
-
     ImageView profile_image;
-    EditText firstname_edit,lastname_edit,user_bio_edit;
-
+    private EditText firstname_edit,lastname_edit,user_bio_edit,et_youtubelink,et_instagramlink,et_facebooklink;
     RadioButton male_btn,female_btn;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_edit_profile, container, false);
         context=getContext();
-
-
         view.findViewById(R.id.Goback).setOnClickListener(this);
         view.findViewById(R.id.save_btn).setOnClickListener(this);
         view.findViewById(R.id.upload_pic_btn).setOnClickListener(this);
-
-
-
+        et_youtubelink=view.findViewById(R.id.et_youtubelink);
+        et_instagramlink=view.findViewById(R.id.et_instagramlink);
+        et_facebooklink=view.findViewById(R.id.et_facebooklink);
         profile_image=view.findViewById(R.id.profile_image);
         firstname_edit=view.findViewById(R.id.firstname_edit);
         lastname_edit=view.findViewById(R.id.lastname_edit);
         user_bio_edit=view.findViewById(R.id.user_bio_edit);
-
-
         firstname_edit.setText(Variables.sharedPreferences.getString(Variables.f_name,""));
         lastname_edit.setText(Variables.sharedPreferences.getString(Variables.l_name,""));
-
         Picasso.with(context)
                 .load(Variables.sharedPreferences.getString(Variables.u_pic,""))
                 .placeholder(R.drawable.profile_image_placeholder)
                 .resize(200,200)
                 .centerCrop()
                 .into(profile_image);
-
-
         male_btn=view.findViewById(R.id.male_btn);
         female_btn=view.findViewById(R.id.female_btn);
-
-
-
         Call_Api_For_User_Details();
-
         return view;
     }
 
@@ -164,35 +147,29 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
 
         builder.setTitle("Add Photo!");
 
-        builder.setItems(options, new DialogInterface.OnClickListener() {
+        builder.setItems(options, (dialog, item) -> {
 
-            @Override
+            if (options[item].equals("Take Photo"))
 
-            public void onClick(DialogInterface dialog, int item) {
+            {
+                if(check_permissions())
+                    openCameraIntent();
 
-                if (options[item].equals("Take Photo"))
+            }
 
-                {
-                    if(check_permissions())
-                        openCameraIntent();
+            else if (options[item].equals("Choose from Gallery"))
 
+            {
+
+                if(check_permissions()) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
                 }
+            }
 
-                else if (options[item].equals("Choose from Gallery"))
+            else if (options[item].equals("Cancel")) {
 
-                {
-
-                    if(check_permissions()) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(intent, 2);
-                    }
-                }
-
-                else if (options[item].equals("Cancel")) {
-
-                    dialog.dismiss();
-
-                }
+                dialog.dismiss();
 
             }
 
@@ -381,9 +358,6 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
         }
 
     }
-
-
-
     // this will check the validations like none of the field can be the empty
     public boolean Check_Validation(){
         String firstname=firstname_edit.getText().toString();
@@ -454,7 +428,7 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
                     String code=response.optString("code");
                     if(code.equals("200")){
 
-                        Variables.sharedPreferences.edit().putString(Variables.u_pic,image_link).commit();
+                        Variables.sharedPreferences.edit().putString(Variables.u_pic,image_link).apply();
                         ProfileFragment.pic_url=image_link;
                         Variables.user_pic=image_link;
 
@@ -484,23 +458,26 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
 
     // this will update the latest info of user in database
     public  void Call_Api_For_Edit_profile() {
-
         Functions.Show_loader(context,false,false);
-
         JSONObject parameters = new JSONObject();
         try {
             parameters.put("fb_id", Variables.sharedPreferences.getString(Variables.u_id,"0"));
             parameters.put("first_name",firstname_edit.getText().toString());
             parameters.put("last_name",lastname_edit.getText().toString());
-
             if(male_btn.isChecked()){
                 parameters.put("gender","Male");
-
             }else if(female_btn.isChecked()){
                 parameters.put("gender","Female");
             }
+            Timber.e(user_bio_edit.getText().toString());
+            Timber.e(et_facebooklink.getText().toString());
+            Timber.e(et_youtubelink.getText().toString());
+            Timber.e(et_instagramlink.getText().toString());
 
             parameters.put("bio",user_bio_edit.getText().toString());
+            parameters.put("fb_url",et_facebooklink.getText().toString());
+            parameters.put("youtube_url",et_youtubelink.getText().toString());
+            parameters.put("instagram_url",et_instagramlink.getText().toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -514,14 +491,15 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
                     JSONObject response=new JSONObject(resp);
                     String code=response.optString("code");
                     if(code.equals("200")) {
-
                         SharedPreferences.Editor editor = Variables.sharedPreferences.edit();
-
                         editor.putString(Variables.f_name, firstname_edit.getText().toString());
                         editor.putString(Variables.l_name, lastname_edit.getText().toString());
+                        editor.putString(Variables.facebooklink,et_facebooklink.getText().toString());
+                        editor.putString(Variables.youtubelink,et_youtubelink.getText().toString());
+                        editor.putString(Variables.instagramlink,et_instagramlink.getText().toString());
                         editor.commit();
 
-                        Variables.user_name = firstname_edit.getText().toString() + " " + lastname_edit.getText().toString();
+                        Variables.user_name = firstname_edit.getText().toString() + " " +lastname_edit.getText().toString();
 
                         getActivity().onBackPressed();
                     }
@@ -539,22 +517,19 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
 
 
     // this will get the user data and parse the data and show the data into views
-    public void Call_Api_For_User_Details(){
+    public void Call_Api_For_User_Details() {
         Functions.Show_loader(getActivity(),false,false);
         Functions.Call_Api_For_Get_User_data(getActivity(),
                 Variables.sharedPreferences.getString(Variables.u_id, ""),
                 new API_CallBack() {
                     @Override
                     public void ArrayData(ArrayList arrayList) {
-
                     }
-
                     @Override
                     public void OnSuccess(String responce) {
                         Functions.cancel_loader();
                         Parse_user_data(responce);
                     }
-
                     @Override
                     public void OnFail(String responce) {
 
@@ -565,15 +540,16 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
     public void Parse_user_data(String responce){
         try {
             JSONObject jsonObject=new JSONObject(responce);
-
+             Log.e("response",responce);
             String code=jsonObject.optString("code");
 
             if(code.equals("200")) {
                 JSONArray msg = jsonObject.optJSONArray("msg");
+                assert msg != null;
                 JSONObject data = msg.getJSONObject(0);
-
-                firstname_edit.setText(data.optString("first_name"));
+                 firstname_edit.setText(data.optString("first_name"));
                 lastname_edit.setText(data.optString("last_name"));
+
 
                 String picture = data.optString("profile_pic");
 
@@ -586,14 +562,16 @@ public class Edit_Profile_F extends RootFragment implements View.OnClickListener
                 if (gender.equals("Male")) {
                     male_btn.setChecked(true);
                 } else {
-                    female_btn.setChecked(true);
+                    female_btn.setChecked(false);
                 }
-
                 user_bio_edit.setText(data.optString("bio"));
+                et_instagramlink.setText(data.optString("instagram_url"));
+                et_facebooklink.setText(data.optString("fb_url"));
+                et_youtubelink.setText(data.optString("youtube_url"));
+
             }
             else {
                 Toast.makeText(context, ""+jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
-
             }
         } catch (JSONException e) {
             e.printStackTrace();

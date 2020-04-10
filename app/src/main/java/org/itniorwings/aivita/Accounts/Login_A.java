@@ -18,9 +18,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.itniorwings.aivita.ApiServices.ApiClient;
+import org.itniorwings.aivita.ApiServices.RetrofitApi;
 import org.itniorwings.aivita.Main_Menu.MainMenuActivity;
 import org.itniorwings.aivita.R;
 import org.itniorwings.aivita.SimpleClasses.ApiRequest;
@@ -50,7 +54,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 
+import org.itniorwings.aivita.model.LoginModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +65,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 public class Login_A extends Activity {
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
@@ -66,6 +75,8 @@ public class Login_A extends Activity {
     SharedPreferences sharedPreferences;
     TextView createAccount;
     View top_view;
+    Button login_btn;
+    EditText tv_username,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +100,30 @@ public class Login_A extends Activity {
 
         setContentView(R.layout.activity_login);
         createAccount=findViewById(R.id.tc_createaccount);
+        login_btn=findViewById(R.id.login_btn);
+        password=findViewById(R.id.password);
+        tv_username=findViewById(R.id.simpleEditText);
+
+        login_btn.setOnClickListener(v -> {
+
+
+            if (tv_username.getText().toString().trim().isEmpty()) {
+                tv_username.setError("Email or Phone is required!");
+                tv_username.requestFocus();
+            } else if (password.getText().toString().trim().isEmpty()) {
+                password.setError("password is required!");
+                password.requestFocus();
+            } else {
+                String username = tv_username.getText().toString().trim();
+                String password1 = password.getText().toString().trim();
+
+                Login(username,password1);
+
+                // TODO Auto-generated method stub
+//                loading.setVisibility(View.VISIBLE);
+//                btnLogin.setVisibility(View.GONE);
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser=mAuth.getCurrentUser();
@@ -121,6 +156,14 @@ public class Login_A extends Activity {
         });
 
 
+//        findViewById(R.id.tc_createaccount).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Call_Api_For_Signup(i);
+//            }
+//        });
+
+
 
         findViewById(R.id.Goback).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +183,7 @@ public class Login_A extends Activity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login_A.this,SignUp.class));
+                startActivity(new Intent(Login_A.this,SignUpActivity.class));
             }
         });
 
@@ -177,7 +220,7 @@ public class Login_A extends Activity {
         // initialze the facebook sdk and request to facebook for login
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>()  {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 handleFacebookAccessToken(loginResult.getAccessToken());
@@ -364,6 +407,7 @@ public class Login_A extends Activity {
 
         JSONObject parameters = new JSONObject();
         try {
+
             parameters.put("fb_id", id);
             parameters.put("first_name",""+f_name);
             parameters.put("last_name", ""+l_name);
@@ -372,6 +416,8 @@ public class Login_A extends Activity {
             parameters.put("version",appversion);
             parameters.put("signup_type",singnup_type);
             parameters.put("device",Variables.device);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -393,10 +439,11 @@ public class Login_A extends Activity {
 
     // if the signup successfull then this method will call and it store the user info in local
     public void Parse_signup_data(String loginData){
+        Log.e("logindata",loginData);
         try {
             JSONObject jsonObject=new JSONObject(loginData);
             String code=jsonObject.optString("code");
-            if(code.equals("200")){
+            if(code.equals("200")) {
                 JSONArray jsonArray=jsonObject.getJSONArray("msg");
                 JSONObject userdata = jsonArray.getJSONObject(0);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -406,6 +453,7 @@ public class Login_A extends Activity {
                 editor.putString(Variables.u_name,userdata.optString("first_name")+" "+userdata.optString("last_name"));
                 editor.putString(Variables.gender,userdata.optString("gender"));
                 editor.putString(Variables.u_pic,userdata.optString("profile_pic"));
+
                 editor.putBoolean(Variables.islogin,true);
                 editor.commit();
 
@@ -448,6 +496,140 @@ public class Login_A extends Activity {
             e.printStackTrace();
         }
     }
+
+
+
+
+    public void Login(String username, String password){
+        RetrofitApi apiService = ApiClient.getClient().create(RetrofitApi.class);
+        Call<LoginModel> call=apiService.login(username,password);
+        call.enqueue(new retrofit2.Callback<LoginModel>() {
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if(response.errorBody()==null&&response.body()!=null ){
+                    Gson newq =new Gson();
+
+
+
+                    System.out.println("**************** resp "+newq.toJson(response.body())+"    "+ response.body() + "   "+response.body().toString());
+
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString(Variables.username,username);
+                    editor.putString(Variables.password,password);
+
+
+                    editor.putBoolean(Variables.islogin,true);
+                    editor.commit();
+
+                    Variables.sharedPreferences=getSharedPreferences(Variables.pref_name,MODE_PRIVATE);
+
+                    //  Variables.user_id=Variables.sharedPreferences.getString(Variables.u_id,"");
+                    System.out.println("******** shar pref "+ Variables.sharedPreferences.getString(Variables.username, "")+ " pass value "+
+                            Variables.sharedPreferences.getString(Variables.password, ""));
+
+
+                    //  prefManager.setUserName(username);
+                    //  prefManager.setPassword(password);
+
+
+                    startActivity(new Intent(Login_A.this,MainMenuActivity.class));
+                    Toast.makeText(getApplicationContext(),"Login Successfull",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Check Your Credentials",Toast.LENGTH_LONG).show();
+                }
+
+            }
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Check Your Credentials",Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+//    // this function call an Api for Signin
+//    private void login(String username,
+//                       String password
+//    ) {
+//
+//
+//        PackageInfo packageInfo = null;
+//        try {
+//            packageInfo =getPackageManager().getPackageInfo(getPackageName(), 0);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        String appversion=packageInfo.versionName;
+//
+//        JSONObject parameters = new JSONObject();
+//        try {
+//
+//
+//            parameters.put("username",""+username);
+//            parameters.put("password", ""+password);
+//
+//
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        iosDialog.show();
+//        ApiRequest.Call_Api(this, Variables.login, parameters, new Callback() {
+//            @Override
+//            public void Responce(String resp) {
+//                iosDialog.cancel();
+//                Parse_login_data(resp);
+//
+//            }
+//        });
+//
+//    }
+//
+//
+//
+//    // if the signup successfull then this method will call and it store the user info in local
+//    public void Parse_login_data(String loginData){
+//        try {
+//            JSONObject jsonObject=new JSONObject(loginData);
+//            String code=jsonObject.optString("code");
+//            if(code.equals("200")){
+//                JSONArray jsonArray=jsonObject.getJSONArray("msg");
+//                JSONObject userdata = jsonArray.getJSONObject(0);
+//                SharedPreferences.Editor editor=sharedPreferences.edit();
+//
+//                editor.putString(Variables.username,userdata.optString("username"));
+//                editor.putString(Variables.password,userdata.optString("password"));
+//
+//                editor.putBoolean(Variables.islogin,true);
+//                editor.commit();
+//
+//                Variables.sharedPreferences=getSharedPreferences(Variables.pref_name,MODE_PRIVATE);
+//                Variables.user_id=Variables.sharedPreferences.getString(Variables.u_id,"");
+//
+//                top_view.setVisibility(View.GONE);
+//                finish();
+//                startActivity(new Intent(this, MainMenuActivity.class));
+//
+//
+//
+//            }else {
+//                Toast.makeText(this, ""+jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
+//            }
+//
+//        } catch (JSONException e) {
+//            Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 
 
 }

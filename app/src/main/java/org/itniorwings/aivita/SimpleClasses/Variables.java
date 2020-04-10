@@ -13,12 +13,12 @@ public class Variables {
 
     public static String device = "android";
     public static String SelectedAudio = "SelectedAudio.aac";
+    public static String root= Environment.getExternalStorageDirectory().toString();
 
-    public static String root = Environment.getExternalStorageDirectory().toString();
+    public static String outputfile=root + "/output.mp4";
+    public static String outputfile2=root + "/output2.mp4";
+    public static String output_filter_file=root + "/output-filtered.mp4";
 
-    public static String outputfile = root + "/aivita.mp4";
-    public static String outputfile2 = root + "/aivita2.mp4";
-    public static String output_filter_file = root + "/aivita-filtered.mp4";
 
     public static String gallery_trimed_video = root + "/gallery_trimed_video.mp4";
     public static String gallery_resize_video = root + "/gallery_resize_video.mp4";
@@ -32,12 +32,16 @@ public class Variables {
     public static String u_pic = "u_pic";
     public static String f_name = "f_name";
     public static String l_name = "l_name";
+    public static String youtubelink="youtube_url";
+    public static String instagramlink="instagram_url";
+    public static String facebooklink="fb_url";
     public static String gender = "u_gender";
     public static String islogin = "is_login";
     public static String device_token = "device_token";
     public static String tag = "aivita_";
     public static String Selected_sound_id = "null";
-
+    public static String username="username";
+    public static String password="password";
     public static String gif_firstpart = "https://media.giphy.com/media/";
     public static String gif_secondpart = "/100w.gif";
     public static String gif_firstpart_chat = "https://media.giphy.com/media/";
@@ -55,10 +59,10 @@ public class Variables {
     public final static int permission_Read_data = 789;
     public final static int permission_Recording_audio = 790;
 
-    public static String gif_api_key1 = "giphy_api_key_here";
+    public static String gif_api_key1 ="giphy_api_key_here";
 
-    public static String domain = "https://www.infinityfacts.com/aivita/API/index.php?p=";
-    public static String base_url = "https://www.infinityfacts.com/aivita/API/";
+    public static String domain = "https://infinityfacts.com/aivita/API/index.php?p=";
+    public static String base_url = "https://infinityfacts.com/aivita/API/";
 
     public static String SignUp = domain + "signup";
     public static String uploadVideo = domain + "uploadVideo";

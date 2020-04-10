@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -22,6 +23,11 @@ import org.itniorwings.aivita.SimpleClasses.Fragment_Callback;
 import org.itniorwings.aivita.SimpleClasses.Functions;
 import org.itniorwings.aivita.SimpleClasses.Variables;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,6 +35,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -53,6 +60,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -63,8 +72,9 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
     Context context;
 
 
-    public  TextView username,video_count_txt;
+    public  TextView username,video_count_txt,username1;
     public  ImageView imageView;
+    private LinearLayout instagram,facebook,youttube;
     public  TextView follow_count_txt,fans_count_txt,heart_count_txt;
 
     ImageView setting_btn;
@@ -96,10 +106,6 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
     }
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,10 +113,60 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
         view= inflater.inflate(R.layout.fragment_profile_tab, container, false);
         context=getContext();
 
+        instagram=view.findViewById(R.id.insta_icon);
+        facebook=view.findViewById(R.id.facebook_icon);
+        youttube=view.findViewById(R.id.youtube_icon);
 
 
+        String url_get_user_data="https://infinityfacts.com/aivita/API/index.php?p=get_user_data";
+        StringRequest stringRequest=new StringRequest(url_get_user_data, response -> {
 
+            try {
+                JSONArray jsonArray=new JSONArray(response);
+                JSONObject jsonObject=jsonArray.getJSONObject(0);
+                String instagram_link=jsonObject.getString("instagram_url");
+                String facebook_link=jsonObject.getString("fb_url");
+                String youtube_link=jsonObject.getString("youtube_url");
+                instagram.setOnClickListener(v -> {
+                    Log.e("facebook_link",facebook_link);
+                    Log.e("u_id",Variables.u_id);
+                    Log.e("u_id",Variables.sharedPreferences.getString(Variables.u_id,""));
 
+                    Log.e("instagramlink",Variables.sharedPreferences.getString(Variables.instagramlink, ""));
+                    Intent viewIntent =
+                            new Intent("android.intent.action.VIEW",
+                                    Uri.parse(instagram_link));
+                    startActivity(viewIntent);
+                });
+                facebook.setOnClickListener(v -> {
+                    Intent viewIntent =
+                            new Intent("android.intent.action.VIEW",
+                                    Uri.parse(facebook_link));
+                    startActivity(viewIntent);
+                });
+
+                youttube.setOnClickListener(v -> {
+                    Intent viewIntent =
+                            new Intent("android.intent.action.VIEW",
+                                    Uri.parse(youtube_link));
+                    startActivity(viewIntent);
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+
+        }){
+                @Override
+                protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("fb_id", Variables.sharedPreferences.getString(Variables.u_id,""));
+                return params;
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
 
         return init();
     }
@@ -164,6 +220,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
     public View init(){
 
         username=view.findViewById(R.id.username);
+        username1=view.findViewById(R.id.username1);
         imageView=view.findViewById(R.id.user_image);
         imageView.setOnClickListener(this);
 
@@ -244,8 +301,9 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
 
     @SuppressLint("SetTextI18n")
-    public void update_profile(){
-        username.setText("@aivita" +Variables.sharedPreferences.getString(Variables.f_name, "") + "" + Variables.sharedPreferences.getString(Variables.l_name, ""));
+    public void update_profile() {
+        username.setText("@aivita"+Variables.sharedPreferences.getString(Variables.f_name, "")+ Variables.sharedPreferences.getString(Variables.l_name, ""));
+        username1.setText(Variables.sharedPreferences.getString(Variables.f_name, "")+" "+ Variables.sharedPreferences.getString(Variables.l_name, ""));
         pic_url = Variables.sharedPreferences.getString(Variables.u_pic, "null");
 
         try {
@@ -325,9 +383,6 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
 
     }
-
-
-
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final Resources resources;
@@ -425,12 +480,12 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
         try {
             JSONObject jsonObject=new JSONObject(responce);
             String code=jsonObject.optString("code");
-            if(code.equals("200")){
+            if(code.equals("200")) {
                 JSONArray msgArray=jsonObject.getJSONArray("msg");
-
                 JSONObject data=msgArray.getJSONObject(0);
                 JSONObject user_info=data.optJSONObject("user_info");
                 username.setText("@aivita"+Objects.requireNonNull(user_info).optString("first_name")+user_info.optString("last_name"));
+                username1.setText(Objects.requireNonNull(user_info).optString("first_name")+" "+user_info.optString("last_name"));
 
                 ProfileFragment.pic_url=user_info.optString("profile_pic");
                 Picasso.with(context)
@@ -446,7 +501,7 @@ public class Profile_Tab_F extends RootFragment implements View.OnClickListener 
 
                 JSONArray user_videos=data.getJSONArray("user_videos");
                 if(!user_videos.toString().equals("["+"0"+"]")){
-                    video_count_txt.setText(user_videos.length()+" Videos");
+                    video_count_txt.setText(user_videos.length()+"Videos");
                     create_popup_layout.setVisibility(View.GONE);
 
                 }
