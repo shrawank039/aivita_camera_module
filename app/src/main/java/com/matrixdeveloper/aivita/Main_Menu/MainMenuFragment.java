@@ -7,17 +7,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import com.matrixdeveloper.aivita.Chat.Chat_Activity;
-import com.matrixdeveloper.aivita.Home.HomeFragment;
 import com.matrixdeveloper.aivita.R;
 import com.matrixdeveloper.aivita.SimpleClasses.Variables;
 import com.matrixdeveloper.aivita.Video_Recording.Video_Recoder_A;
 
 import com.google.android.material.tabs.TabLayout;
 import com.matrixdeveloper.aivita.Accounts.Login_A;
-import com.matrixdeveloper.aivita.Discover.Discover_F;
-import com.matrixdeveloper.aivita.Inbox.Inbox_F;
-import com.matrixdeveloper.aivita.Profile.Profile_Tab_F;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -321,7 +316,6 @@ public class MainMenuFragment extends RootFragment implements View.OnClickListen
                         String name=MainMenuActivity.intent.getExtras().getString("title");
                         String icon=MainMenuActivity.intent.getExtras().getString("icon");
 
-                        chatFragment(id,name,icon);
 
                     }
                 }
@@ -352,11 +346,11 @@ public class MainMenuFragment extends RootFragment implements View.OnClickListen
             final Fragment result;
             switch (position) {
                 case 0:
-                    result = new HomeFragment();
+                    result = new BlankFragment();
                     break;
 
                 case 1:
-                    result = new Discover_F();
+                    result = new BlankFragment();
                     break;
 
                 case 2:
@@ -364,11 +358,11 @@ public class MainMenuFragment extends RootFragment implements View.OnClickListen
                     break;
 
                 case 3:
-                    result = new Inbox_F();
+                    result = new BlankFragment();
                     break;
 
                 case 4:
-                    result = new Profile_Tab_F();
+                    result = new BlankFragment();
                     break;
 
                 default:
@@ -533,20 +527,20 @@ public class MainMenuFragment extends RootFragment implements View.OnClickListen
         }
         return true;
     }
-    public void chatFragment(String receiverid,String name,String picture) {
-        Chat_Activity chat_activity = new Chat_Activity();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_to_left, R.anim.in_from_left, R.anim.out_to_right);
-
-        Bundle args = new Bundle();
-        args.putString("user_id", receiverid);
-        args.putString("user_name",name);
-        args.putString("user_pic",picture);
-
-        chat_activity.setArguments(args);
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.MainMenuFragment, chat_activity).commit();
-    }
+//    public void chatFragment(String receiverid,String name,String picture) {
+//        Chat_Activity chat_activity = new Chat_Activity();
+//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_to_left, R.anim.in_from_left, R.anim.out_to_right);
+//
+//        Bundle args = new Bundle();
+//        args.putString("user_id", receiverid);
+//        args.putString("user_name",name);
+//        args.putString("user_pic",picture);
+//
+//        chat_activity.setArguments(args);
+//        transaction.addToBackStack(null);
+//        transaction.replace(R.id.MainMenuFragment, chat_activity).commit();
+//    }
 
 
 

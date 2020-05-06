@@ -24,7 +24,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
-import com.matrixdeveloper.aivita.Comments.Comment_Get_Set;
 import com.gmail.samehadar.iosdialog.CamomileSpinner;
 import com.googlecode.mp4parser.authoring.Track;
 
@@ -303,105 +302,105 @@ public class Functions {
             e.printStackTrace();
         }
 
-        ApiRequest.Call_Api(activity, Variables.postComment, parameters, new Callback() {
-            @Override
-            public void Responce(String resp) {
-
-                ArrayList<Comment_Get_Set> arrayList=new ArrayList<>();
-                try {
-                    JSONObject response=new JSONObject(resp);
-                    String code=response.optString("code");
-                    if(code.equals("200")){
-                        JSONArray msgArray=response.getJSONArray("msg");
-                        for (int i=0;i<msgArray.length();i++) {
-                            JSONObject itemdata = msgArray.optJSONObject(i);
-                            Comment_Get_Set item=new Comment_Get_Set();
-                            item.fb_id=itemdata.optString("fb_id");
-
-                            JSONObject user_info=itemdata.optJSONObject("user_info");
-                            item.first_name=user_info.optString("first_name");
-                            item.last_name=user_info.optString("last_name");
-                            item.profile_pic=user_info.optString("profile_pic");
-
-
-                            item.video_id=itemdata.optString("id");
-                            item.comments=itemdata.optString("comments");
-                            item.created=itemdata.optString("created");
-
-
-                            arrayList.add(item);
-                        }
-
-                        api_callBack.ArrayData(arrayList);
-
-                    }else {
-                       // Toast.makeText(activity, ""+response.optString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    api_callBack.OnFail(e.toString());
-                   // Toast.makeText(activity, "Something wrong with Api", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-
-            }
-        });
+//        ApiRequest.Call_Api(activity, Variables.postComment, parameters, new Callback() {
+//            @Override
+//            public void Responce(String resp) {
+//
+//                ArrayList<Comment_Get_Set> arrayList=new ArrayList<>();
+//                try {
+//                    JSONObject response=new JSONObject(resp);
+//                    String code=response.optString("code");
+//                    if(code.equals("200")){
+//                        JSONArray msgArray=response.getJSONArray("msg");
+//                        for (int i=0;i<msgArray.length();i++) {
+//                            JSONObject itemdata = msgArray.optJSONObject(i);
+//                            Comment_Get_Set item=new Comment_Get_Set();
+//                            item.fb_id=itemdata.optString("fb_id");
+//
+//                            JSONObject user_info=itemdata.optJSONObject("user_info");
+//                            item.first_name=user_info.optString("first_name");
+//                            item.last_name=user_info.optString("last_name");
+//                            item.profile_pic=user_info.optString("profile_pic");
+//
+//
+//                            item.video_id=itemdata.optString("id");
+//                            item.comments=itemdata.optString("comments");
+//                            item.created=itemdata.optString("created");
+//
+//
+//                            arrayList.add(item);
+//                        }
+//
+//                        api_callBack.ArrayData(arrayList);
+//
+//                    }else {
+//                       // Toast.makeText(activity, ""+response.optString("msg"), Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                } catch (JSONException e) {
+//                    api_callBack.OnFail(e.toString());
+//                   // Toast.makeText(activity, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
 
 
     }
 
-    public static void Call_Api_For_get_Comment(final Activity activity, String video_id, final API_CallBack api_callBack) {
-
-        JSONObject parameters = new JSONObject();
-        try {
-             parameters.put("video_id",video_id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        ApiRequest.Call_Api(activity, Variables.showVideoComments, parameters, new Callback() {
-            @Override
-            public void Responce(String resp) {
-                ArrayList<Comment_Get_Set> arrayList=new ArrayList<>();
-                try {
-                    JSONObject response=new JSONObject(resp);
-                    String code=response.optString("code");
-                    if(code.equals("200")){
-                        JSONArray msgArray=response.getJSONArray("msg");
-                        for (int i=0;i<msgArray.length();i++) {
-                            JSONObject itemdata = msgArray.optJSONObject(i);
-                            Comment_Get_Set item=new Comment_Get_Set();
-                            item.fb_id=itemdata.optString("fb_id");
-
-                            JSONObject user_info=itemdata.optJSONObject("user_info");
-                            item.first_name=user_info.optString("first_name");
-                            item.last_name=user_info.optString("last_name");
-                            item.profile_pic=user_info.optString("profile_pic");
-
-
-                            item.video_id=itemdata.optString("id");
-                            item.comments=itemdata.optString("comments");
-                            item.created=itemdata.optString("created");
-
-
-                            arrayList.add(item);
-                        }
-
-                        api_callBack.ArrayData(arrayList);
-
-                    }else {
-                     //   Toast.makeText(activity, ""+response.optString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    api_callBack.OnFail(e.toString());
-                   // Toast.makeText(activity, "Something wrong with Api", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-            }
-        });
-
-    }
+//    public static void Call_Api_For_get_Comment(final Activity activity, String video_id, final API_CallBack api_callBack) {
+//
+//        JSONObject parameters = new JSONObject();
+//        try {
+//             parameters.put("video_id",video_id);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        ApiRequest.Call_Api(activity, Variables.showVideoComments, parameters, new Callback() {
+//            @Override
+//            public void Responce(String resp) {
+//                ArrayList<Comment_Get_Set> arrayList=new ArrayList<>();
+//                try {
+//                    JSONObject response=new JSONObject(resp);
+//                    String code=response.optString("code");
+//                    if(code.equals("200")){
+//                        JSONArray msgArray=response.getJSONArray("msg");
+//                        for (int i=0;i<msgArray.length();i++) {
+//                            JSONObject itemdata = msgArray.optJSONObject(i);
+//                            Comment_Get_Set item=new Comment_Get_Set();
+//                            item.fb_id=itemdata.optString("fb_id");
+//
+//                            JSONObject user_info=itemdata.optJSONObject("user_info");
+//                            item.first_name=user_info.optString("first_name");
+//                            item.last_name=user_info.optString("last_name");
+//                            item.profile_pic=user_info.optString("profile_pic");
+//
+//
+//                            item.video_id=itemdata.optString("id");
+//                            item.comments=itemdata.optString("comments");
+//                            item.created=itemdata.optString("created");
+//
+//
+//                            arrayList.add(item);
+//                        }
+//
+//                        api_callBack.ArrayData(arrayList);
+//
+//                    }else {
+//                     //   Toast.makeText(activity, ""+response.optString("msg"), Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                } catch (JSONException e) {
+//                    api_callBack.OnFail(e.toString());
+//                   // Toast.makeText(activity, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//
+//    }
 
 
     public static void Call_Api_For_update_view(final Activity activity,

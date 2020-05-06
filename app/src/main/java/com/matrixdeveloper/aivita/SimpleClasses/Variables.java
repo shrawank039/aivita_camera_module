@@ -8,6 +8,8 @@ import java.util.Locale;
 
 public class Variables {
 
+    public static String fb_id = "501847329";
+
     public static int screen_width;
     public static int screen_height;
 
